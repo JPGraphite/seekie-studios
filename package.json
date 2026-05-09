@@ -1,11 +1,27 @@
 {
   "name": "seekie-studios",
-  "version": "1.0.0",
-  "description": "Website for Seekie Studios",
-  "main": "index.js",
+  "type": "module",
+  "version": "0.1.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.5.0",
+    "@astrojs/markdoc": "^1.0.4",
+    "@astrojs/react": "^5.0.4",
+    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/tailwind": "^6.0.2",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.50",
+    "astro": "^6.3.1",
+    "mimetext": "^3.0.28",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260509.1"
+  }
 }

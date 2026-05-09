@@ -1,0 +1,50 @@
+---
+interface Props {
+  tag?: string;
+  title: string;
+  subtitle?: string;
+  tagColor?: string;
+  titleColor?: string;
+  align?: 'split' | 'center' | 'left';
+  class?: string;
+}
+
+const {
+  tag,
+  title,
+  subtitle,
+  tagColor,
+  titleColor,
+  align = 'split',
+  class: className = '',
+} = Astro.props;
+---
+<div
+  class:list={[
+    'mb-14 flex-wrap',
+    align === 'split' && 'flex items-end justify-between gap-8',
+    align === 'center' && 'flex flex-col items-center text-center gap-4',
+    align === 'left'   && 'flex flex-col gap-4',
+    className,
+  ]}
+>
+  <div>
+    {tag && (
+      <span
+        class="section-tag"
+        style={tagColor ? `color:${tagColor}` : undefined}
+      >{tag}</span>
+    )}
+    <h2
+      class="reveal"
+      style={titleColor ? `color:${titleColor}` : undefined}
+      set:html={title}
+    />
+  </div>
+
+  {subtitle && (
+    <p class="reveal reveal-d2 text-plum text-[17px] max-w-[380px] leading-snug">
+      {subtitle}
+    </p>
+  )}
+</div>

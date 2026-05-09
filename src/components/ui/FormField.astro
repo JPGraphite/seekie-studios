@@ -1,0 +1,59 @@
+---
+interface Props {
+  label: string;
+  name: string;
+  type?: 'text' | 'email' | 'tel' | 'number' | 'date' | 'textarea' | 'select';
+  placeholder?: string;
+  required?: boolean;
+  min?: string | number;
+  error?: string;
+  class?: string;
+  options?: Array<{ label: string; value: string }>;
+}
+
+const {
+  label,
+  name,
+  type = 'text',
+  placeholder,
+  required = false,
+  min,
+  error,
+  class: className = '',
+  options = [],
+} = Astro.props;
+
+const inputClass = 'w-full bg-white/[.08] border border-lemon/25 text-white placeholder:text-pink-50/50 px-3.5 py-3 rounded-xl font-body focus:outline-none focus:border-lemon focus:bg-white/[.12] transition-colors';
+---
+<div class:list={['field', className]}>
+  <label for={name} class="block text-[12px] text-lemon tracking-[.16em] uppercase font-bold mb-1.5">
+    {label}
+  </label>
+
+  {type === 'textarea' ? (
+    <textarea
+      id={name}
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      rows={3}
+      class={inputClass + ' resize-none'}
+    />
+  ) : type === 'select' ? (
+    <select id={name} name={name} required={required} class={inputClass}>
+      {options.map(o => <option value={o.value}>{o.label}</option>)}
+    </select>
+  ) : (
+    <input
+      id={name}
+      name={name}
+      type={type}
+      placeholder={placeholder}
+      required={required}
+      min={min}
+      class={inputClass}
+    />
+  )}
+
+  {error && <p class="mt-1 text-xs text-orange">{error}</p>}
+</div>

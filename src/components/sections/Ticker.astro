@@ -1,0 +1,41 @@
+---
+const items = [
+  'BYO drinks',
+  'We come to you',
+  'Custom themes',
+  'Hens · birthdays · book club · just because',
+  'Mocktails welcome',
+  'No skills required',
+];
+---
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>
+      {items.map(item => (
+        <>
+          <em>{item}</em><span class="star">✺</span>
+        </>
+      ))}
+    </span>
+    <span aria-hidden="true">
+      {items.map(item => (
+        <>
+          <em>{item}</em><span class="star">✺</span>
+        </>
+      ))}
+    </span>
+  </div>
+</div>
+
+<style>
+  .ticker {
+    background: #4A1F8C; color: #F5CF3E;
+    border-top: 3px solid #2A0F4F; border-bottom: 3px solid #2A0F4F;
+    overflow: hidden;
+    font-family: "Bagel Fat One", serif; font-size: 28px; letter-spacing: .04em;
+    padding: 14px 0;
+  }
+  .ticker-track { display: flex; gap: 48px; white-space: nowrap; }
+  .ticker-track span { display: inline-flex; align-items: center; gap: 48px; }
+  .star { color: #EC3B8E; font-size: 22px; }
+</style>

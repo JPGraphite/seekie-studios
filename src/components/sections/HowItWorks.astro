@@ -1,0 +1,135 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+
+const steps = [
+  {
+    num: '01',
+    title: 'Pick a painting',
+    body: "Choose from our catalogue of crowd-favourites, or tell us your theme and we'll design something custom — Taylor Swift era? French Riviera? Black cat under the moon? Done.",
+    icon: `<path d="M3 12c0-5 4-9 9-9s9 4 9 9c0 3-2 4-4 4s-2 2-2 3 1 2-1 3c-3 1-11-2-11-10z"/><circle cx="7" cy="9" r="1.4" fill="#FFF6E8"/><circle cx="11" cy="6" r="1.4" fill="#FFF6E8"/><circle cx="15" cy="7" r="1.4" fill="#FFF6E8"/><circle cx="17" cy="11" r="1.4" fill="#FFF6E8"/>`,
+    color: '#EC3B8E',
+  },
+  {
+    num: '02',
+    title: 'We bring it all',
+    body: "Canvases, easels, paints, brushes, aprons, tablecloths — the whole studio packs into the van and unpacks at your place. You do not have to lift a paintbrush ahead of time.",
+    icon: `<path d="M5 21h14"/><path d="M9 21V8a3 3 0 0 1 6 0v13"/><path d="M9 12h6"/>`,
+    color: '#F37A2B',
+  },
+  {
+    num: '03',
+    title: 'BYO & sip',
+    body: "Bring whatever you're drinking — bubbles, longnecks, lemon-lime & bitters, all welcome. We guide you through, stroke by stroke, for 2–3 messy, brilliant hours.",
+    icon: `<path d="M8 3v4l-2 2v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9l-2-2V3"/><path d="M8 3h8"/><path d="M10 12h4"/>`,
+    color: '#6CD7C2',
+  },
+];
+
+const perks = [
+  '<b>Operating across</b> Geelong, Surf Coast & the Bellarine. Other locations by request.',
+  '<b>Mobile setup</b> — we come to you, or your venue (with their permission)',
+  '<b>Small groups welcome</b> — book the whole room or just a few mates',
+  '<b>Custom catalogue</b> — pick from our designs or commission a one-off',
+  '<b>Tables & chairs</b> available at extra cost by prior arrangement',
+];
+---
+<section class="what" id="what">
+  <div class="wrap">
+    <SectionHeading
+      tag="how it works"
+      title="A paint party,<br>delivered to your door."
+      subtitle="We're a small mobile studio based on the Bellarine. We pack up everything you need and turn your living room, backyard or function space into the studio for the night."
+    />
+
+    <div class="feature-grid">
+      {steps.map((step, i) => (
+        <div class={`feature reveal${i > 0 ? ` reveal-d${i + 1}` : ''}`}>
+          <div class="num">{step.num}</div>
+          <div class="icon-circle" style={`background:${step.color}`}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFF6E8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" set:html={step.icon} />
+          </div>
+          <h3>{step.title}</h3>
+          <p set:html={step.body} />
+        </div>
+      ))}
+    </div>
+
+    <div class="what-rows">
+      <ul>
+        {perks.map(perk => (
+          <li>
+            <span class="check">✓</span>
+            <div set:html={perk} />
+          </li>
+        ))}
+      </ul>
+      <div class="what-img">
+        <div class="sticker">small<br>groups<br>welcome!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .what { background: #FFF6E8; position: relative; padding: 110px 0; z-index: 2; }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 880px) { .feature-grid { grid-template-columns: 1fr; } }
+
+  .feature {
+    position: relative; background: #fff; border: 2.5px solid #4A1F8C;
+    border-radius: 24px; padding: 32px 28px;
+    box-shadow: 6px 6px 0 #4A1F8C; transition: .3s;
+  }
+  .feature:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 #4A1F8C; }
+  .feature .icon-circle {
+    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    margin-bottom: 20px; border: 2.5px solid #4A1F8C;
+  }
+  .feature h3 { font-family: "Caprasimo", serif; font-size: 26px; color: #4A1F8C; margin-bottom: 10px; }
+  .feature p  { color: #3d2666; font-size: 15px; line-height: 1.55; }
+  .feature .num {
+    position: absolute; top: -18px; right: 18px; width: 46px; height: 46px; border-radius: 50%;
+    background: #F5CF3E; color: #4A1F8C; display: grid; place-items: center;
+    font-family: "Bagel Fat One", serif; font-size: 18px; border: 2.5px solid #4A1F8C;
+  }
+
+  .what-rows { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 880px) { .what-rows { grid-template-columns: 1fr; } }
+
+  ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  li {
+    display: flex; align-items: flex-start; gap: 14px; font-size: 17px; color: #2A0F4F;
+    padding: 14px 18px; background: #EFD9FF; border-radius: 14px;
+  }
+  li .check {
+    flex: none; width: 26px; height: 26px; border-radius: 50%;
+    background: #4A1F8C; color: #F5CF3E;
+    display: grid; place-items: center;
+    font-family: "Bagel Fat One", serif; font-size: 14px;
+  }
+
+  .what-img {
+    aspect-ratio: 4/5; border-radius: 24px; border: 3px solid #4A1F8C;
+    background: #F37A2B; position: relative; display: grid; place-items: center;
+    color: #FFF6E8; box-shadow: 8px 8px 0 #4A1F8C; overflow: hidden;
+  }
+  .what-img::before {
+    content: ""; position: absolute; left: -15%; bottom: -20%; width: 80%; aspect-ratio: 1;
+    background: #EC3B8E; border-radius: 55% 45% 60% 40%/40% 60% 40% 60%;
+  }
+  .what-img::after {
+    content: "📷  PHOTO\AGroup mid-paint, easels up,\Adrinks in hand"; white-space: pre;
+    position: relative; z-index: 2;
+    font-family: "DM Mono", "Courier New", monospace; font-size: 13px; letter-spacing: .08em; text-align: center; padding: 24px;
+  }
+
+  .sticker {
+    position: absolute; font-family: "Bagel Fat One", serif; color: #4A1F8C;
+    background: #F5CF3E; border: 2.5px solid #4A1F8C;
+    width: 120px; height: 120px; border-radius: 50%; top: -22px; right: -22px;
+    transform: rotate(-8deg); box-shadow: 3px 3px 0 #4A1F8C;
+    font-size: 18px; line-height: 1; text-align: center;
+    display: grid; place-items: center; z-index: 2;
+  }
+</style>

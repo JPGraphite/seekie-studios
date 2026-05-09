@@ -1,0 +1,100 @@
+---
+import Icon from '../ui/Icon.astro';
+
+const navLinks = [
+  { label: 'How it works',     href: '#what' },
+  { label: 'Upcoming events',  href: '#events' },
+  { label: 'Astray Bar',       href: '#astray' },
+  { label: 'The Feed',         href: '#feed' },
+  { label: 'Book a party',     href: '#book' },
+];
+
+const socials = [
+  { name: 'instagram' as const, href: 'https://instagram.com/seekie.studios',   label: 'Instagram' },
+  { name: 'facebook'  as const, href: 'https://facebook.com/seekiestudios',     label: 'Facebook' },
+  { name: 'email'     as const, href: 'mailto:seekie.studios@gmail.com',         label: 'Email' },
+];
+---
+<footer>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="brand-foot">
+        <div class="logo">
+          <img src="/assets/logo-pink.jpg" alt="" width="54" height="54" />
+          <div>
+            <div class="brand-name">Seekie Studios</div>
+            <div class="brand-sub">Mobile Paint &amp; Sip</div>
+          </div>
+        </div>
+        <p>Private &amp; public paint &amp; sip parties across Geelong, the Surf Coast and the Bellarine. We come to you, fully BYO, custom paintings to suit your theme.</p>
+        <div class="socials">
+          {socials.map(s => (
+            <a href={s.href} target={s.name !== 'email' ? '_blank' : undefined} rel={s.name !== 'email' ? 'noopener' : undefined} aria-label={s.label}>
+              <Icon name={s.name} size={18} />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          {navLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="mailto:seekie.studios@gmail.com">seekie.studios@gmail.com</a></li>
+          <li><a href="https://instagram.com/seekie.studios" target="_blank" rel="noopener">DM on Instagram</a></li>
+          <li><a href="https://facebook.com/seekiestudios" target="_blank" rel="noopener">Message on Facebook</a></li>
+          <li>Geelong · Surf Coast · Bellarine</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="legal">
+      <span>© 2026 <span class="marquee-name">Seekie Studios</span> · Made with paint &amp; love on the Bellarine.</span>
+      <span>ABN xx xxx xxx xxx · Mobile paint &amp; sip parties.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: #2E0F5C; color: #EFD9FF;
+    padding: 60px 0 32px;
+    border-top: 3px solid #F5CF3E;
+    position: relative; z-index: 2;
+  }
+
+  .grid3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  @media (max-width: 680px) { .grid3 { grid-template-columns: 1fr; } }
+
+  h4 { font-family: "Bagel Fat One", serif; color: #F5CF3E; font-size: 18px; margin-bottom: 14px; letter-spacing: .04em; }
+  ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  a  { color: #E1BFFF; text-decoration: none; font-size: 14px; }
+  a:hover { color: #F5CF3E; }
+
+  .brand-foot { display: flex; flex-direction: column; gap: 14px; max-width: 340px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo img { width: 54px; height: 54px; border-radius: 50%; border: 2px solid #F5CF3E; object-fit: cover; }
+  .brand-name { font-family: "Bagel Fat One", serif; color: #F5CF3E; font-size: 22px; }
+  .brand-sub  { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #E1BFFF; margin-top: 2px; }
+  .brand-foot p { font-size: 14px; color: #E1BFFF; line-height: 1.5; }
+
+  .socials { display: flex; gap: 10px; margin-top: 6px; }
+  .socials a {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid #F5CF3E;
+    display: grid; place-items: center; transition: .2s; color: #F5CF3E;
+  }
+  .socials a:hover { background: #F5CF3E; color: #2E0F5C; }
+
+  .legal {
+    border-top: 1.5px solid rgba(245,207,62,.2); padding-top: 22px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-size: 13px; color: #E1BFFF;
+  }
+  .marquee-name { font-family: "Bagel Fat One", serif; color: #F5CF3E; font-size: 18px; }
+</style>

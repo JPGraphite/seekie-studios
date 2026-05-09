@@ -1,0 +1,131 @@
+---
+// Social feed integration is deferred pending library selection (Behold.so is the leading candidate).
+// This component renders a static placeholder grid that matches the prototype exactly.
+// Replace the placeholder grid with the embed script once the library is chosen.
+---
+<section class="gallery" id="feed">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">@seekie.studios</span>
+        <h2 class="reveal">Straight from<br>the studio.</h2>
+      </div>
+      <p class="reveal reveal-d2">
+        A live look at the canvases, the messes, the mid-paint candids. Tag us in your finished pieces —
+        we love seeing where they hang.
+      </p>
+    </div>
+
+    <div class="feed-tabs">
+      <button class="active" data-feed="ig" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+        Instagram
+      </button>
+      <button data-feed="fb" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8a1 1 0 0 1 1-1z"/></svg>
+        Facebook
+      </button>
+      <a href="https://instagram.com/seekie.studios" target="_blank" rel="noopener" class="view-all">View all on Instagram →</a>
+    </div>
+
+    <div class="feed-grid">
+      <!-- Instagram posts -->
+      <div class="post post-grad-1"><div class="ph">starry cat<br>night canvas<br>finished</div><div class="overlay"><span class="ic">♥ 482</span><span class="ic">💬 38</span></div></div>
+      <div class="post post-grad-2 video"><div class="ph">timelapse<br>of the cat painting<br>2-min reel</div><div class="overlay"><span class="ic">▶ 12.4k</span><span class="ic">♥ 891</span></div></div>
+      <div class="post post-grad-3"><div class="ph">birthday<br>group, easels<br>up at home</div><div class="overlay"><span class="ic">♥ 264</span><span class="ic">💬 21</span></div></div>
+      <div class="post post-grad-4"><div class="ph">paint palette<br>+ wine glass<br>(top down)</div><div class="overlay"><span class="ic">♥ 198</span><span class="ic">💬 12</span></div></div>
+      <div class="post post-grad-5"><div class="ph">bells beach<br>sunset canvas<br>WIP</div><div class="overlay"><span class="ic">♥ 312</span><span class="ic">💬 19</span></div></div>
+      <div class="post post-grad-6 video"><div class="ph">astray bar<br>setup tour<br>reel</div><div class="overlay"><span class="ic">▶ 8.1k</span><span class="ic">♥ 540</span></div></div>
+      <div class="post post-grad-7"><div class="ph">color study<br>swatches<br>flatlay</div><div class="overlay"><span class="ic">♥ 156</span><span class="ic">💬 7</span></div></div>
+      <div class="post post-grad-8"><div class="ph">finished<br>canvases lined<br>up on table</div><div class="overlay"><span class="ic">♥ 421</span><span class="ic">💬 28</span></div></div>
+
+      <!-- Facebook posts (hidden until tab toggled) -->
+      <div class="post fb-post post-grad-2"><div class="ph">EVENT POST<br>Cat Under the Moon<br>Sun 24 May</div><div class="overlay"><span class="ic">👍 84</span><span class="ic">💬 22</span></div></div>
+      <div class="post fb-post post-grad-1"><div class="ph">FB photo album<br>Bellarine birthday<br>32 photos</div><div class="overlay"><span class="ic">👍 156</span><span class="ic">💬 41</span></div></div>
+      <div class="post fb-post post-grad-3"><div class="ph">Hens party<br>review post<br>5 stars ⭐⭐⭐⭐⭐</div><div class="overlay"><span class="ic">👍 102</span><span class="ic">💬 14</span></div></div>
+      <div class="post fb-post post-grad-5"><div class="ph">Bells Beach<br>Sunset event<br>tickets live</div><div class="overlay"><span class="ic">👍 67</span><span class="ic">💬 9</span></div></div>
+      <div class="post fb-post post-grad-7"><div class="ph">behind the scenes<br>packing the van<br>video</div><div class="overlay"><span class="ic">👍 51</span><span class="ic">💬 6</span></div></div>
+      <div class="post fb-post post-grad-4"><div class="ph">bellarine bloom<br>SOLD OUT<br>announcement</div><div class="overlay"><span class="ic">👍 138</span><span class="ic">💬 27</span></div></div>
+      <div class="post fb-post post-grad-8"><div class="ph">testimonial<br>"best night of<br>the year"</div><div class="overlay"><span class="ic">👍 89</span><span class="ic">💬 11</span></div></div>
+      <div class="post fb-post post-grad-6"><div class="ph">FB live recap<br>Astray Bar<br>opening night</div><div class="overlay"><span class="ic">👍 211</span><span class="ic">💬 33</span></div></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery { background: #FFF6E8; position: relative; padding: 110px 0; z-index: 2; }
+
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 56px; flex-wrap: wrap; }
+  .section-head h2 { font-size: clamp(44px, 6vw, 80px); max-width: 720px; }
+  .section-head p  { color: #7B36C7; font-size: 17px; max-width: 380px; }
+
+  .feed-tabs { display: flex; gap: 10px; margin-bottom: 22px; align-items: center; }
+  .feed-tabs button {
+    background: #fff; border: 2px solid #4A1F8C; color: #4A1F8C;
+    padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: 14px;
+    transition: .2s; display: flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  .feed-tabs button.active { background: #4A1F8C; color: #F5CF3E; }
+  .feed-tabs button:hover:not(.active) { background: #EFD9FF; }
+  .view-all { margin-left: auto; color: #7B36C7; font-weight: 600; font-size: 14px; text-decoration: none; }
+  .view-all:hover { color: #EC3B8E; }
+
+  .feed-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    border: 2.5px solid #4A1F8C; border-radius: 24px; padding: 8px; background: #fff;
+    box-shadow: 6px 6px 0 #4A1F8C;
+  }
+  @media (max-width: 980px) { .feed-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .feed-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .post {
+    aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; position: relative;
+    background: #EFD9FF; cursor: pointer; display: flex; align-items: flex-end; transition: .25s;
+  }
+  .post:hover { transform: scale(.97); }
+  .post::before { content: ""; position: absolute; pointer-events: none; }
+
+  .ph {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    color: #fff; font-family: "DM Mono", "Courier New", monospace;
+    font-size: 10px; letter-spacing: .08em; text-align: center; padding: 10px; line-height: 1.35;
+    z-index: 2;
+  }
+  .overlay {
+    position: relative; width: 100%; padding: 12px; z-index: 2;
+    background: linear-gradient(180deg, transparent, rgba(46,15,92,.85));
+    color: #fff; font-size: 11px; display: flex; justify-content: space-between; align-items: center;
+    opacity: 0; transition: .25s;
+  }
+  .post:hover .overlay { opacity: 1; }
+  .ic { display: flex; align-items: center; gap: 4px; }
+  .post.video::after {
+    content: "▶"; position: absolute; top: 10px; right: 10px; color: #fff; font-size: 14px;
+    background: rgba(0,0,0,.4); width: 24px; height: 24px; border-radius: 50%;
+    display: grid; place-items: center; z-index: 3;
+  }
+
+  /* Post colour tiles */
+  .post-grad-1 { background: #3a1a6a; }
+  .post-grad-1::before { top: 14%; right: 14%; width: 36%; aspect-ratio: 1; background: #F5CF3E; border-radius: 50%; }
+  .post-grad-2 { background: #F37A2B; }
+  .post-grad-2::before { left: -15%; bottom: -20%; width: 90%; aspect-ratio: 1; background: #EC3B8E; border-radius: 55% 45% 60% 40%/45% 55% 45% 55%; }
+  .post-grad-3 { background: #6CD7C2; }
+  .post-grad-3::before { right: -20%; top: -15%; width: 75%; aspect-ratio: 1; background: #4A1F8C; border-radius: 60% 40% 55% 45%/50% 55% 45% 50%; }
+  .post-grad-4 { background: #EC3B8E; }
+  .post-grad-4::before { left: 50%; top: 50%; transform: translate(-50%,-50%); width: 60%; aspect-ratio: 1; background: #F5CF3E; border-radius: 48% 52% 65% 35%/55% 45% 55% 45%; }
+  .post-grad-5 { background: #4A1F8C; }
+  .post-grad-5::before { left: -10%; bottom: -15%; width: 80%; aspect-ratio: 1; background: #F37A2B; border-radius: 55% 45% 40% 60%/45% 60% 40% 55%; }
+  .post-grad-6 { background: #2E0F5C; }
+  .post-grad-6::before { right: -10%; top: 50%; transform: translateY(-50%); width: 80%; aspect-ratio: 1; background: #6CD7C2; border-radius: 60% 40% 55% 45%/45% 55% 45% 55%; }
+  .post-grad-7 { background: #F5CF3E; }
+  .post-grad-7::before { left: 50%; top: -25%; transform: translateX(-50%); width: 90%; aspect-ratio: 1; background: #EC3B8E; border-radius: 50%; }
+  .post-grad-8 { background: #FFD4DD; }
+  .post-grad-8::before { right: -20%; bottom: -25%; width: 90%; aspect-ratio: 1; background: #F37A2B; border-radius: 55% 45% 60% 40%/40% 60% 40% 60%; }
+
+  /* Feed tab toggling via body class */
+  .post.fb-post { display: none; }
+  :global(body.feed-fb) .post:not(.fb-post) { display: none; }
+  :global(body.feed-fb) .post.fb-post { display: flex; }
+  :global(body.feed-ig) .post.fb-post { display: none; }
+</style>

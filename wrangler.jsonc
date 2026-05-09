@@ -1,0 +1,8 @@
+{
+  "name": "seekie-studios",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "send_email": [
+    { "name": "EMAIL", "destination_address": "seekie.studios@gmail.com" }
+  ]
+}

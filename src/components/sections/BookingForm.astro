@@ -1,0 +1,124 @@
+---
+import FormField from '../ui/FormField.astro';
+import Button from '../ui/Button.astro';
+
+const regionOptions = [
+  { label: 'Geelong',          value: 'geelong' },
+  { label: 'Surf Coast',       value: 'surf-coast' },
+  { label: 'Bellarine',        value: 'bellarine' },
+  { label: 'Other (let us know)', value: 'other' },
+];
+---
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="book-card">
+      <div class="inner">
+        <div>
+          <h2 class="reveal">Got a date<br>in mind? <span class="pink">Let's paint.</span></h2>
+          <p class="reveal reveal-d2">
+            Hens parties, milestone birthdays, book club, team builds, divorce parties, just-because parties.
+            Tell us the vibe and we'll come back with a quote within 24 hours.
+          </p>
+          <div class="contact-list">
+            <div>📧 <a href="mailto:seekie.studios@gmail.com">seekie.studios@gmail.com</a></div>
+            <div>📍 Geelong · Surf Coast · Bellarine (other locations on request)</div>
+            <div>⏱ Sessions run approx. 2–3 hours</div>
+          </div>
+        </div>
+
+        <form class="book-form" id="bookForm" novalidate>
+          <!-- Honeypot: bots fill this, humans don't see it -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
+
+          <div class="row2">
+            <FormField label="Your name"  name="name"       type="text"   placeholder="Aria"  required />
+            <FormField label="Group size" name="group_size" type="number" placeholder="12" min="2" required />
+          </div>
+          <FormField label="Email" name="email" type="email" placeholder="you@email.com" required />
+          <div class="row2">
+            <FormField label="Date"   name="date"   type="date"   required />
+            <FormField label="Region" name="region" type="select" options={regionOptions} required />
+          </div>
+          <FormField label="Theme / vibe" name="message" type="textarea" placeholder="Hens party — coastal florals + bottomless mimosas" />
+
+          <Button type="submit" variant="submit" class="mt-1.5">Send enquiry →</Button>
+          <div class="sent" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('bookForm') as HTMLFormElement | null;
+  const sentEl = form?.querySelector<HTMLElement>('.sent');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data: { ok?: boolean; error?: string } = await res.json();
+
+      if (data.ok) {
+        form.querySelectorAll<HTMLElement>('.field, .row2, button[type="submit"]').forEach(el => el.style.display = 'none');
+        if (sentEl) { sentEl.textContent = "Thanks — we'll be in touch within 24h ✿"; sentEl.style.display = 'block'; }
+      } else {
+        throw new Error(data.error ?? 'Unknown error');
+      }
+    } catch {
+      if (btn) { btn.disabled = false; btn.textContent = 'Send enquiry →'; }
+      if (sentEl) { sentEl.textContent = 'Something went wrong — please email us directly.'; sentEl.style.display = 'block'; }
+    }
+  });
+</script>
+
+<style>
+  .book { background: #EFD9FF; position: relative; padding: 110px 0; z-index: 2; }
+
+  .book-card {
+    background: #4A1F8C; color: #FFF6E8;
+    border-radius: 32px; padding: 64px 56px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 24px 60px -10px rgba(74,31,140,.4);
+  }
+  @media (max-width: 680px) { .book-card { padding: 40px 28px; } }
+  .book-card::before {
+    content: ""; position: absolute; top: -80px; right: -80px; width: 280px; height: 280px;
+    background: #F5CF3E; border-radius: 55% 45% 60% 40%/45% 55% 45% 55%; opacity: .18;
+  }
+  .book-card::after {
+    content: ""; position: absolute; bottom: -100px; left: -60px; width: 240px; height: 240px;
+    background: #6CD7C2; border-radius: 50%; opacity: .18;
+  }
+
+  .inner {
+    position: relative; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;
+  }
+  @media (max-width: 880px) { .inner { grid-template-columns: 1fr; gap: 32px; } }
+
+  h2 { color: #F5CF3E; font-size: clamp(40px, 5vw, 68px); margin-bottom: 18px; }
+  h2 .pink { color: #EC3B8E; }
+  p  { color: #F8E8FF; font-size: 18px; max-width: 480px; margin-bottom: 26px; line-height: 1.55; }
+
+  .contact-list { display: flex; flex-direction: column; gap: 10px; color: #F8E8FF; font-size: 15px; }
+  .contact-list a { color: #F5CF3E; text-decoration: none; font-weight: 600; }
+  .contact-list a:hover { text-decoration: underline; }
+
+  .book-form {
+    background: rgba(255,255,255,.05); border: 1.5px solid rgba(245,207,62,.3);
+    border-radius: 20px; padding: 24px; backdrop-filter: blur(10px);
+  }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .sent {
+    display: none; text-align: center; color: #F5CF3E; padding: 20px;
+    font-family: "Caprasimo", serif; font-size: 20px;
+  }
+</style>
