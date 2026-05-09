@@ -331,6 +331,11 @@ export default config({
           label: 'Theme/vibe placeholder',
           defaultValue: 'Hens party - coastal florals + bottomless mimosas',
         }),
+        notesLabel: fields.text({ label: 'Notes field label', defaultValue: 'Anything else?' }),
+        notesPlaceholder: fields.text({
+          label: 'Notes field placeholder',
+          defaultValue: 'Allergies, accessibility needs, BYO plans, surprise party shhh...',
+        }),
         submitLabel: fields.text({ label: 'Submit button label', defaultValue: 'Send enquiry →' }),
         successMessage: fields.text({
           label: 'Success message',

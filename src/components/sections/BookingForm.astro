@@ -20,6 +20,8 @@ const data = (entry?.data ?? {}) as {
   regionOptions: Array<{ label: string; value: string }>;
   themeLabel: string;
   themePlaceholder: string;
+  notesLabel: string;
+  notesPlaceholder: string;
   submitLabel: string;
   successMessage: string;
   errorMessage: string;
@@ -28,7 +30,13 @@ const data = (entry?.data ?? {}) as {
 const siteEntry = await getEntry('settings', 'site');
 const site = (siteEntry?.data ?? {}) as { email?: string };
 const contactEmail = site.email ?? 'seekie.studios@gmail.com';
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
+
+{turnstileSiteKey && (
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+)}
 <section class="book" id="book">
   <div class="wrap">
     <div class="book-card">
@@ -55,7 +63,17 @@ const contactEmail = site.email ?? 'seekie.studios@gmail.com';
             <FormField label={data.dateLabel}   name="date"   type="date"   required />
             <FormField label={data.regionLabel} name="region" type="select" options={data.regionOptions} required />
           </div>
-          <FormField label={data.themeLabel} name="message" type="textarea" placeholder={data.themePlaceholder} />
+          <FormField label={data.themeLabel} name="theme" type="textarea" placeholder={data.themePlaceholder} />
+          <FormField label={data.notesLabel} name="notes" type="textarea" placeholder={data.notesPlaceholder} />
+
+          {turnstileSiteKey && (
+            <div
+              class="cf-turnstile"
+              data-sitekey={turnstileSiteKey}
+              data-theme="dark"
+              data-size="flexible"
+            />
+          )}
 
           <Button type="submit" variant="submit" class="mt-1.5">{data.submitLabel}</Button>
           <div class="sent" aria-live="polite"></div>
@@ -66,6 +84,7 @@ const contactEmail = site.email ?? 'seekie.studios@gmail.com';
 </section>
 
 <script>
+  type TurnstileApi = { reset: (widget?: string | HTMLElement) => void };
   const form = document.getElementById('bookForm') as HTMLFormElement | null;
   const sentEl = form?.querySelector<HTMLElement>('.sent');
   const submitLabel = form?.dataset.submitLabel ?? 'Send enquiry →';
@@ -76,6 +95,7 @@ const contactEmail = site.email ?? 'seekie.studios@gmail.com';
     e.preventDefault();
     const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    if (sentEl) { sentEl.textContent = ''; sentEl.style.display = 'none'; }
 
     try {
       const res = await fetch('/api/contact', {
@@ -85,15 +105,24 @@ const contactEmail = site.email ?? 'seekie.studios@gmail.com';
       });
       const data: { ok?: boolean; error?: string } = await res.json();
 
-      if (data.ok) {
-        form.querySelectorAll<HTMLElement>('.field, .row2, button[type="submit"]').forEach(el => el.style.display = 'none');
+      if (res.ok && data.ok) {
+        form.querySelectorAll<HTMLElement>('.field, .row2, .cf-turnstile, button[type="submit"]').forEach(el => el.style.display = 'none');
         if (sentEl) { sentEl.textContent = successMessage; sentEl.style.display = 'block'; }
       } else {
         throw new Error(data.error ?? 'Unknown error');
       }
-    } catch {
+    } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = submitLabel; }
-      if (sentEl) { sentEl.textContent = errorMessage; sentEl.style.display = 'block'; }
+      if (sentEl) {
+        const msg = err instanceof Error && err.message && err.message !== 'Unknown error'
+          ? err.message
+          : errorMessage;
+        sentEl.textContent = msg;
+        sentEl.style.display = 'block';
+      }
+      const ts = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
+      const widget = form.querySelector<HTMLElement>('.cf-turnstile');
+      if (ts && widget) ts.reset(widget);
     }
   });
 </script>

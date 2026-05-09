@@ -19,6 +19,8 @@
   ],
   "themeLabel": "Theme / vibe",
   "themePlaceholder": "Hens party - coastal florals + bottomless mimosas",
+  "notesLabel": "Anything else?",
+  "notesPlaceholder": "Allergies, accessibility needs, BYO plans, surprise party shhh...",
   "submitLabel": "Send enquiry →",
   "successMessage": "Thanks - we'll be in touch within 24h ✿",
   "errorMessage": "Something went wrong - please email us directly."
