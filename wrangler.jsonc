@@ -6,16 +6,20 @@
     "directory": "./dist"
   },
   "compatibility_date": "2026-02-21",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "logs": {
+      "enabled": false,
+      "invocation_logs": true
+    }
+  },
   "send_email": [
     {
       "name": "EMAIL",
       "destination_address": "seekie.studios@gmail.com"
     }
   ],
-   "routes": [
+  "routes": [
     {
       "pattern": "seekiestudios.com.au",
       "custom_domain": true
