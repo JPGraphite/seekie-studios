@@ -2,9 +2,10 @@
   "name": "seekie-studios",
   "main": "dist/_worker.js/index.js",
   "assets": {
+    "binding": "ASSETS",
     "directory": "./dist"
   },
-  "compatibility_date": "2025-01-01",
+  "compatibility_date": "2026-02-21",
   "compatibility_flags": [
     "nodejs_compat"
   ],

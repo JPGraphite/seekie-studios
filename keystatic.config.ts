@@ -2,9 +2,7 @@ import { config, collection, singleton, fields } from '@keystatic/core';
 
 export default config({
   storage:
-    process.env.NODE_ENV === 'production'
-      ? { kind: 'github', repo: { owner: 'JPGraphite', name: 'seekie-studios' } }
-      : { kind: 'local' },
+    { kind: 'github', repo: { owner: 'JPGraphite', name: 'seekie-studios' } },
 
   collections: {
     events: collection({
