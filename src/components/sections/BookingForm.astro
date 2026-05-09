@@ -94,8 +94,21 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
     if (sentEl) { sentEl.textContent = ''; sentEl.style.display = 'none'; }
+
+    const turnstileEl = form.querySelector<HTMLElement>('.cf-turnstile');
+    if (turnstileEl) {
+      const token = form.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]')?.value;
+      if (!token) {
+        if (sentEl) {
+          sentEl.textContent = 'Please complete the verification challenge above.';
+          sentEl.style.display = 'block';
+        }
+        return;
+      }
+    }
+
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
     try {
       const res = await fetch('/api/contact', {

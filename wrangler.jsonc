@@ -27,9 +27,9 @@
     }
   ],
   "vars": {
-    "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAADMD7egQrvvZhij7",
     "KEYSTATIC_GITHUB_CLIENT_ID": "Iv23liReUIzwQlGOZiLE",
-    "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG": "seekie-studios"
+    "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG": "seekie-studios",
+    "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAADMD7egQrvvZhij7"
   },
   "unsafe": {
     "bindings": [

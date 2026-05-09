@@ -62,17 +62,20 @@ async function verifyTurnstile(
   token: string,
   secret: string,
   ip: string,
-): Promise<boolean> {
+): Promise<{ success: boolean; errorCodes: string[] }> {
   try {
     const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ secret, response: token, remoteip: ip }),
     });
-    const data = (await res.json()) as { success?: boolean };
-    return data.success === true;
-  } catch {
-    return false;
+    const data = (await res.json()) as { success?: boolean; 'error-codes'?: string[] };
+    return {
+      success: data.success === true,
+      errorCodes: data['error-codes'] ?? [],
+    };
+  } catch (err) {
+    return { success: false, errorCodes: [`fetch-failed:${String(err)}`] };
   }
 }
 
@@ -126,7 +129,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const turnstileSecret = env.TURNSTILE_SECRET_KEY as string | undefined;
   if (turnstileSecret) {
     const token = String(body['cf-turnstile-response'] ?? '');
-    if (!token || !(await verifyTurnstile(token, turnstileSecret, ip))) {
+    if (!token) {
+      console.warn('[contact] Turnstile token missing from submission');
+      return Response.json(
+        { error: 'Please complete the verification challenge before submitting.' },
+        { status: 400 },
+      );
+    }
+    const verdict = await verifyTurnstile(token, turnstileSecret, ip);
+    if (!verdict.success) {
+      console.warn('[contact] Turnstile verify failed', { errorCodes: verdict.errorCodes, ip });
       return Response.json(
         { error: 'Verification failed. Please refresh and try again.' },
         { status: 400 },
