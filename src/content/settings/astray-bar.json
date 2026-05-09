@@ -1,0 +1,23 @@
+{
+  "tag": "in partnership with",
+  "title": "Sip with us at<br>Astray Bar.",
+  "lede": "Our favourite place to host public events. Astray pours up bottomless drinks packages (their <b>mocktails</b> are absurd) and the <b>poutine</b> - chips, cheese curds, gravy - is genuinely the best post-painting dinner in Geelong.",
+  "ctaLabel": "See Astray events",
+  "ctaHref": "#events",
+  "perks": [
+    { "icon": "🥂", "heading": "Bottomless", "body": "Drinks package included with paint & sip ticket - wines, beers & mocktails." },
+    { "icon": "🍟", "heading": "Poutine", "body": "Chips, cheese curds, gravy. Stay for dinner after - it slaps." },
+    { "icon": "🎨", "heading": "The studio", "body": "Easels lined up along the bar wall. Lighting? Vibes? Sorted." },
+    { "icon": "📍", "heading": "Geelong CBD", "body": "Walking distance from the waterfront. Easy parking nearby." }
+  ],
+  "nextSession": {
+    "label": "Next session ✺",
+    "heading": "Cat Under",
+    "headingAccent": "the Moon.",
+    "dateLine": "Sun 24 May · 4:30pm",
+    "venueLine": "Astray Bar · Geelong CBD",
+    "priceLine": "$100pp · drinks + canvas + 2.5h",
+    "hostBy": "Seekie Studios",
+    "hostAt": "Astray Bar"
+  }
+}

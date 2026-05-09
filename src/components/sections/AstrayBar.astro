@@ -1,13 +1,27 @@
 ---
+import { getEntry } from 'astro:content';
 import Button from '../ui/Button.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
 
-const perks = [
-  { emoji: '🥂', title: 'Bottomless', body: 'Drinks package included with paint & sip ticket — wines, beers & mocktails.' },
-  { emoji: '🍟', title: 'Poutine',    body: 'Chips, cheese curds, gravy. Stay for dinner after — it slaps.' },
-  { emoji: '🎨', title: 'The studio', body: 'Easels lined up along the bar wall. Lighting? Vibes? Sorted.' },
-  { emoji: '📍', title: 'Geelong CBD', body: 'Walking distance from the waterfront. Easy parking nearby.' },
-];
+const entry = await getEntry('settings', 'astray-bar');
+const data = (entry?.data ?? {}) as {
+  tag: string;
+  title: string;
+  lede: string;
+  ctaLabel: string;
+  ctaHref: string;
+  perks: Array<{ icon: string; heading: string; body: string }>;
+  nextSession: {
+    label: string;
+    heading: string;
+    headingAccent: string;
+    dateLine: string;
+    venueLine: string;
+    priceLine: string;
+    hostBy: string;
+    hostAt: string;
+  };
+};
 ---
 <section class="astray" id="astray">
   <svg class="deco-svg" viewBox="0 0 400 200" aria-hidden="true">
@@ -19,41 +33,37 @@ const perks = [
     <div class="grid2">
       <div>
         <SectionHeading
-          tag="in partnership with"
-          title="Sip with us at<br>Astray Bar."
+          tag={data.tag}
+          title={data.title}
           tagColor="var(--color-mint)"
           titleColor="var(--color-lemon)"
           align="left"
         />
-        <p class="lede2 reveal reveal-d2">
-          Our favourite place to host public events. Astray pours up bottomless drinks packages
-          (their <b>mocktails</b> are absurd) and the <b>poutine</b> — chips, cheese curds, gravy —
-          is genuinely the best post-painting dinner in Geelong.
-        </p>
+        <p class="lede2 reveal reveal-d2" set:html={data.lede} />
 
         <div class="perks">
-          {perks.map((p, i) => (
+          {data.perks.map((p, i) => (
             <div class={`perk reveal${i > 0 ? ` reveal-d${i + 1}` : ''}`}>
-              <h4>{p.emoji} {p.title}</h4>
+              <h4>{p.icon} {p.heading}</h4>
               <p>{p.body}</p>
             </div>
           ))}
         </div>
 
-        <Button href="#events" variant="primary">See Astray events <span class="arr">→</span></Button>
+        <Button href={data.ctaHref} variant="primary">{data.ctaLabel} <span class="arr">→</span></Button>
       </div>
 
       <div class="astray-card reveal reveal-d2">
-        <span class="label">Next session ✺</span>
-        <h3>Cat Under <span>the Moon.</span></h3>
+        <span class="label">{data.nextSession.label}</span>
+        <h3>{data.nextSession.heading} <span>{data.nextSession.headingAccent}</span></h3>
         <ul class="menu-list">
-          <li>Sun 24 May · 4:30pm</li>
-          <li>Astray Bar · Geelong CBD</li>
-          <li>$100pp · drinks + canvas + 2.5h</li>
+          <li>{data.nextSession.dateLine}</li>
+          <li>{data.nextSession.venueLine}</li>
+          <li>{data.nextSession.priceLine}</li>
         </ul>
         <div class="meta">
-          <span><b>Run by</b> Seekie Studios</span>
-          <span><b>Hosted at</b> Astray Bar</span>
+          <span><b>Run by</b> {data.nextSession.hostBy}</span>
+          <span><b>Hosted at</b> {data.nextSession.hostAt}</span>
         </div>
       </div>
     </div>

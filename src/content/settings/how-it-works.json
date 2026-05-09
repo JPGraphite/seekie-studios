@@ -1,0 +1,32 @@
+{
+  "tag": "how it works",
+  "title": "A paint party,<br>delivered to your door.",
+  "subtitle": "We're a small mobile studio based on the Bellarine. We pack up everything you need and turn your living room, backyard or function space into the studio for the night.",
+  "steps": [
+    {
+      "title": "Pick a painting",
+      "body": "Choose from our catalogue of crowd-favourites, or tell us your theme and we'll design something custom - Taylor Swift era? French Riviera? Black cat under the moon? Done.",
+      "icon": "palette",
+      "color": "pink"
+    },
+    {
+      "title": "We bring it all",
+      "body": "Canvases, easels, paints, brushes, aprons, tablecloths - the whole studio packs into the van and unpacks at your place. You do not have to lift a paintbrush ahead of time.",
+      "icon": "easel",
+      "color": "orange"
+    },
+    {
+      "title": "BYO & sip",
+      "body": "Bring whatever you're drinking - bubbles, longnecks, lemon-lime & bitters, all welcome. We guide you through, stroke by stroke, for 2-3 messy, brilliant hours.",
+      "icon": "glass",
+      "color": "mint"
+    }
+  ],
+  "perks": [
+    "<b>Operating across</b> Geelong, Surf Coast & the Bellarine. Other locations by request.",
+    "<b>Mobile setup</b> - we come to you, or your venue (with their permission)",
+    "<b>Small groups welcome</b> - book the whole room or just a few mates",
+    "<b>Custom catalogue</b> - pick from our designs or commission a one-off",
+    "<b>Tables & chairs</b> available at extra cost by prior arrangement"
+  ]
+}

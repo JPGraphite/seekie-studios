@@ -1,32 +1,50 @@
 ---
+import { getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import Icon from '../ui/Icon.astro';
+import { resolveSettingsImage } from '../../lib/settings-images';
 
-const navLinks = [
-  { label: 'How it works',     href: '#what' },
-  { label: 'Upcoming events',  href: '#events' },
-  { label: 'Astray Bar',       href: '#astray' },
-  { label: 'The Feed',         href: '#feed' },
-  { label: 'Book a party',     href: '#book' },
-];
+const footerEntry = await getEntry('settings', 'footer');
+const data = (footerEntry?.data ?? {}) as {
+  logo?: string | null;
+  brandName: string;
+  brandSub: string;
+  description: string;
+  exploreHeading: string;
+  exploreLinks: Array<{ label: string; href: string }>;
+  contactHeading: string;
+  regionsLine: string;
+  legalLine: string;
+  legalSubLine: string;
+};
 
-const socials = [
-  { name: 'instagram' as const, href: 'https://instagram.com/seekie.studios',   label: 'Instagram' },
-  { name: 'facebook'  as const, href: 'https://facebook.com/seekiestudios',     label: 'Facebook' },
-  { name: 'email'     as const, href: 'mailto:seekie.studios@gmail.com',         label: 'Email' },
-];
+const siteEntry = await getEntry('settings', 'site');
+const site = (siteEntry?.data ?? {}) as {
+  email?: string;
+  abn?: string;
+  instagram?: string;
+  facebook?: string;
+};
+
+const logo = await resolveSettingsImage(data.logo);
+
+const socials: Array<{ name: 'instagram' | 'facebook' | 'email'; href: string; label: string }> = [];
+if (site.instagram) socials.push({ name: 'instagram', href: site.instagram, label: 'Instagram' });
+if (site.facebook)  socials.push({ name: 'facebook',  href: site.facebook,  label: 'Facebook' });
+if (site.email)     socials.push({ name: 'email',     href: `mailto:${site.email}`, label: 'Email' });
 ---
 <footer>
   <div class="wrap">
     <div class="grid3">
       <div class="brand-foot">
         <div class="logo">
-          <img src="/assets/logo-pink.jpg" alt="" width="54" height="54" />
+          {logo && <Image src={logo} alt={data.brandName} width={108} height={108} />}
           <div>
-            <div class="brand-name">Seekie Studios</div>
-            <div class="brand-sub">Mobile Paint &amp; Sip</div>
+            <div class="brand-name">{data.brandName}</div>
+            <div class="brand-sub">{data.brandSub}</div>
           </div>
         </div>
-        <p>Private &amp; public paint &amp; sip parties across Geelong, the Surf Coast and the Bellarine. We come to you, fully BYO, custom paintings to suit your theme.</p>
+        <p>{data.description}</p>
         <div class="socials">
           {socials.map(s => (
             <a href={s.href} target={s.name !== 'email' ? '_blank' : undefined} rel={s.name !== 'email' ? 'noopener' : undefined} aria-label={s.label}>
@@ -37,26 +55,26 @@ const socials = [
       </div>
 
       <div>
-        <h4>Explore</h4>
+        <h4>{data.exploreHeading}</h4>
         <ul>
-          {navLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+          {data.exploreLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
         </ul>
       </div>
 
       <div>
-        <h4>Get in touch</h4>
+        <h4>{data.contactHeading}</h4>
         <ul>
-          <li><a href="mailto:seekie.studios@gmail.com">seekie.studios@gmail.com</a></li>
-          <li><a href="https://instagram.com/seekie.studios" target="_blank" rel="noopener">DM on Instagram</a></li>
-          <li><a href="https://facebook.com/seekiestudios" target="_blank" rel="noopener">Message on Facebook</a></li>
-          <li>Geelong · Surf Coast · Bellarine</li>
+          {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+          {site.instagram && <li><a href={site.instagram} target="_blank" rel="noopener">DM on Instagram</a></li>}
+          {site.facebook && <li><a href={site.facebook} target="_blank" rel="noopener">Message on Facebook</a></li>}
+          {data.regionsLine && <li>{data.regionsLine}</li>}
         </ul>
       </div>
     </div>
 
     <div class="legal">
-      <span>© 2026 <span class="marquee-name">Seekie Studios</span> · Made with paint &amp; love on the Bellarine.</span>
-      <span>ABN xx xxx xxx xxx · Mobile paint &amp; sip parties.</span>
+      <span>{data.legalLine}</span>
+      <span>{site.abn ? `ABN ${site.abn} · ` : ''}{data.legalSubLine}</span>
     </div>
   </div>
 </footer>
@@ -79,7 +97,7 @@ const socials = [
 
   .brand-foot { display: flex; flex-direction: column; gap: var(--space-3-5); max-width: 340px; }
   .logo { display: flex; align-items: center; gap: var(--space-3); }
-  .logo img { width: 54px; height: 54px; border-radius: var(--radius-circle); border: var(--border-base) solid var(--color-lemon); object-fit: cover; }
+  .logo :global(img) { width: 54px; height: 54px; border-radius: var(--radius-circle); border: var(--border-base) solid var(--color-lemon); object-fit: cover; }
   .brand-name { font-family: var(--font-display); color: var(--color-lemon); font-size: var(--text-xl); }
   .brand-sub  { font-size: var(--text-xs); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-lavender-mid); margin-top: var(--space-1); }
   .brand-foot p { font-size: var(--text-tag); color: var(--color-lavender-mid); line-height: var(--leading-base); }
@@ -96,5 +114,4 @@ const socials = [
     display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;
     font-size: var(--text-sm); color: var(--color-lavender-mid);
   }
-  .marquee-name { font-family: var(--font-display); color: var(--color-lemon); font-size: var(--text-lg); }
 </style>

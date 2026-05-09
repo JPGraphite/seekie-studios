@@ -1,12 +1,9 @@
 ---
-const items = [
-  'BYO drinks',
-  'We come to you',
-  'Custom themes',
-  'Hens · birthdays · book club · just because',
-  'Mocktails welcome',
-  'No skills required',
-];
+import { getEntry } from 'astro:content';
+
+const entry = await getEntry('settings', 'ticker');
+const data = (entry?.data ?? {}) as { items: string[] };
+const items = data.items ?? [];
 ---
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">

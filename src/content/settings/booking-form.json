@@ -1,0 +1,25 @@
+{
+  "heading": "Got a date<br>in mind? <span class=\"pink\">Let's paint.</span>",
+  "intro": "Hens parties, milestone birthdays, book club, team builds, divorce parties, just-because parties. Tell us the vibe and we'll come back with a quote within 24 hours.",
+  "sidebarLocation": "📍 Geelong · Surf Coast · Bellarine (other locations on request)",
+  "sidebarDuration": "⏱ Sessions run approx. 2-3 hours",
+  "nameLabel": "Your name",
+  "namePlaceholder": "Aria",
+  "groupSizeLabel": "Group size",
+  "groupSizePlaceholder": "12",
+  "emailLabel": "Email",
+  "emailPlaceholder": "you@email.com",
+  "dateLabel": "Date",
+  "regionLabel": "Region",
+  "regionOptions": [
+    { "label": "Geelong", "value": "geelong" },
+    { "label": "Surf Coast", "value": "surf-coast" },
+    { "label": "Bellarine", "value": "bellarine" },
+    { "label": "Other (let us know)", "value": "other" }
+  ],
+  "themeLabel": "Theme / vibe",
+  "themePlaceholder": "Hens party - coastal florals + bottomless mimosas",
+  "submitLabel": "Send enquiry →",
+  "successMessage": "Thanks - we'll be in touch within 24h ✿",
+  "errorMessage": "Something went wrong - please email us directly."
+}

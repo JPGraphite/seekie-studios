@@ -1,0 +1,18 @@
+{
+  "logo": "/src/assets/settings/logo-pink.jpg",
+  "brandName": "Seekie Studios",
+  "brandSub": "Mobile Paint & Sip",
+  "description": "Private & public paint & sip parties across Geelong, the Surf Coast and the Bellarine. We come to you, fully BYO, custom paintings to suit your theme.",
+  "exploreHeading": "Explore",
+  "exploreLinks": [
+    { "label": "How it works", "href": "#what" },
+    { "label": "Upcoming events", "href": "#events" },
+    { "label": "Astray Bar", "href": "#astray" },
+    { "label": "The Feed", "href": "#feed" },
+    { "label": "Book a party", "href": "#book" }
+  ],
+  "contactHeading": "Get in touch",
+  "regionsLine": "Geelong · Surf Coast · Bellarine",
+  "legalLine": "© 2026 Seekie Studios · Made with paint & love on the Bellarine.",
+  "legalSubLine": "Mobile paint & sip parties."
+}

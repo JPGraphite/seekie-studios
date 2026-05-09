@@ -1,5 +1,41 @@
 ---
+import { getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import Button from '../ui/Button.astro';
+import { resolveSettingsImage } from '../../lib/settings-images';
+
+const entry = await getEntry('settings', 'hero');
+const data = (entry?.data ?? {}) as {
+  eyebrow: string;
+  headline: string;
+  lede: string;
+  primaryCtaLabel: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+  stats: Array<{ value: string; label: string }>;
+  polaroids: Array<{ caption: string; image?: string | null }>;
+};
+
+const polaroidPlaceholders = [
+  '[ photo ]<br>painters at easels<br>laughing, mid-mess',
+  '',
+  '[ photo ]<br>palette w/ paint blobs<br>+ wine glass',
+  '[ photo ]<br>finished canvases<br>lined up on table',
+];
+
+const polaroidFloats = ['float', 'float-2', 'float', 'float-2'];
+const polaroidPositions = ['p1', 'p2', 'p3', 'p4'];
+
+const polaroids = await Promise.all(
+  (data.polaroids ?? []).slice(0, 4).map(async (p, i) => ({
+    caption: p.caption,
+    image: await resolveSettingsImage(p.image),
+    placeholder: polaroidPlaceholders[i],
+    position: polaroidPositions[i],
+    float: polaroidFloats[i],
+  })),
+);
 ---
 <header class="hero">
   <div class="hero-blob b1" aria-hidden="true"></div>
@@ -23,34 +59,34 @@ import Button from '../ui/Button.astro';
     <div class="grid">
       <div>
         <div class="reveal in">
-          <span class="eyebrow"><span class="dot"></span>Geelong · Surf Coast · Bellarine</span>
+          <span class="eyebrow"><span class="dot"></span>{data.eyebrow}</span>
         </div>
-        <h1 class="hero-title reveal in reveal-d2">
-          Paint, <br>
-          <span class="gw">sip</span>, <em>repeat.</em>
-        </h1>
-        <p class="lede reveal in reveal-d3">
-          Private mobile paint &amp; sip parties — we roll up to your house, your venue, your bar.
-          Fully BYO, custom paintings to suit your theme, all the canvases, easels &amp; aprons sorted.
-          You bring the crew &amp; the playlist. 🎨
-        </p>
+        <h1 class="hero-title reveal in reveal-d2" set:html={data.headline} />
+        <p class="lede reveal in reveal-d3">{data.lede}</p>
         <div class="ctas reveal in reveal-d4">
-          <Button href="#book" variant="primary">Book a private party <span class="arr">→</span></Button>
-          <Button href="#events" variant="secondary">See upcoming events</Button>
+          <Button href={data.primaryCtaHref} variant="primary">{data.primaryCtaLabel} <span class="arr">→</span></Button>
+          <Button href={data.secondaryCtaHref} variant="secondary">{data.secondaryCtaLabel}</Button>
         </div>
 
         <div class="hero-stats reveal in reveal-d4">
-          <div class="s"><div class="num">2–3h</div><div class="lab">Session length</div></div>
-          <div class="s"><div class="num">BYO</div><div class="lab">Drinks &amp; venue</div></div>
-          <div class="s"><div class="num">∞</div><div class="lab">Custom themes</div></div>
+          {data.stats.map((stat) => (
+            <div class="s"><div class="num">{stat.value}</div><div class="lab">{stat.label}</div></div>
+          ))}
         </div>
       </div>
 
       <div class="stage" aria-hidden="true">
-        <div class="polaroid p1 float"><div class="img">[ photo ]<br>painters at easels<br>laughing, mid-mess</div><div class="cap">happy mess ✿</div></div>
-        <div class="polaroid p2 float-2"><div class="img"></div><div class="cap">starry cat night</div></div>
-        <div class="polaroid p3 float"><div class="img">[ photo ]<br>palette w/ paint blobs<br>+ wine glass</div><div class="cap">grand opening!</div></div>
-        <div class="polaroid p4 float-2"><div class="img">[ photo ]<br>finished canvases<br>lined up on table</div><div class="cap">bellarine birthday</div></div>
+        {polaroids.map((p) => (
+          <div class:list={['polaroid', p.position, p.float, { 'has-image': !!p.image }]}>
+            <div class="img">
+              {p.image
+                ? <Image src={p.image} alt={p.caption} width={560} height={747} />
+                : <span set:html={p.placeholder} />
+              }
+            </div>
+            <div class="cap">{p.caption}</div>
+          </div>
+        ))}
       </div>
     </div>
   </div>
@@ -84,10 +120,10 @@ import Button from '../ui/Button.astro';
   .eyebrow .dot { width: 8px; height: 8px; border-radius: var(--radius-circle); background: var(--color-lemon); }
 
   h1.hero-title { font-size: clamp(56px, 9.5vw, 140px); margin: var(--space-6) 0 var(--space-5); color: var(--color-grape-deep); }
-  h1.hero-title .gw  { color: var(--color-pink); }
-  h1.hero-title .amp { display: inline-block; color: var(--color-orange); transform: rotate(-8deg) translateY(6px); font-family: var(--font-groove); }
-  h1.hero-title em   { font-style: normal; color: var(--color-plum); position: relative; display: inline-block; }
-  h1.hero-title em::after {
+  h1.hero-title :global(.gw)  { color: var(--color-pink); }
+  h1.hero-title :global(.amp) { display: inline-block; color: var(--color-orange); transform: rotate(-8deg) translateY(6px); font-family: var(--font-groove); }
+  h1.hero-title :global(em)   { font-style: normal; color: var(--color-plum); position: relative; display: inline-block; }
+  h1.hero-title :global(em)::after {
     content: ""; position: absolute; left: -4%; right: -4%; bottom: 6%; height: 18%;
     background: var(--color-lemon); border-radius: 50%/40%; z-index: -1; transform: rotate(-1deg);
   }
@@ -102,12 +138,24 @@ import Button from '../ui/Button.astro';
   .hero-stats .num { font-family: var(--font-display); font-size: var(--text-3xl); color: var(--color-orange); line-height: var(--leading-tight); }
   .hero-stats .lab { font-size: var(--text-sm); color: var(--color-grape); font-weight: 600; max-width: 120px; line-height: var(--leading-snug); }
 
-  /* Polaroid stage */
-  .stage { position: relative; height: 680px; }
-  @media (max-width: 1024px) { .stage { height: 360px; } }
+  /* Polaroid stage - fluid, aspect-ratio driven so polaroids scale with column width */
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    aspect-ratio: 500 / 680;
+    margin-left: auto;
+    margin-right: 0;
+  }
+  @media (max-width: 1024px) {
+    .stage { max-width: 360px; margin: 0 auto; }
+  }
 
   .polaroid {
-    position: absolute; background: var(--color-white); padding: 14px 14px 56px;
+    position: absolute;
+    container-type: inline-size;
+    background: var(--color-white);
+    padding: 10px 10px 48px;
     box-shadow: 0 18px 36px -10px rgba(74,31,140,.35), 0 4px 12px rgba(74,31,140,.15);
     border-radius: 2px;
     transition: transform .4s cubic-bezier(.2,.9,.3,1.3);
@@ -116,29 +164,36 @@ import Button from '../ui/Button.astro';
     width: 100%; aspect-ratio: 3/4; border-radius: 1px;
     display: flex; align-items: center; justify-content: center;
     background-color: var(--color-plum); color: var(--color-white);
-    font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: .08em;
-    text-align: center; padding: var(--space-3); line-height: var(--leading-compact);
+    font-family: var(--font-mono);
+    font-size: clamp(9px, 5cqw, 14px);
+    letter-spacing: .08em;
+    text-align: center; padding: 4cqw; line-height: var(--leading-compact);
+    overflow: hidden; position: relative;
   }
-  .polaroid .cap { font-family: var(--font-hand); font-size: var(--text-xl); color: var(--color-grape); text-align: center; margin-top: var(--space-2); line-height: var(--leading-tight); }
+  .polaroid.has-image .img { padding: 0; }
+  .polaroid.has-image .img :global(img) {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .polaroid .cap {
+    font-family: var(--font-hand);
+    font-size: clamp(14px, 9cqw, 22px);
+    color: var(--color-grape);
+    text-align: center;
+    margin-top: 3cqw;
+    line-height: var(--leading-tight);
+  }
   .polaroid:hover { transform: scale(1.04) rotate(0deg) !important; z-index: 5; }
 
-  .p1 { top: 30px;  left: 0;    width: 240px; transform: rotate(-7deg); }
-  .p2 { top: 80px;  left: 200px; width: 280px; transform: rotate(4deg);  z-index: 2; }
-  .p3 { top: 240px; left: 60px;  width: 230px; transform: rotate(-3deg); z-index: 3; }
-  .p4 { top: 300px; left: 280px; width: 220px; transform: rotate(8deg);  z-index: 1; }
+  .p1 { top: 4%;  left: 0;   width: 46%; transform: rotate(-7deg); }
+  .p2 { top: 11%; left: 38%; width: 54%; transform: rotate(4deg);  z-index: 2; }
+  .p3 { top: 35%; left: 11%; width: 44%; transform: rotate(-3deg); z-index: 3; }
+  .p4 { top: 44%; left: 54%; width: 42%; transform: rotate(8deg);  z-index: 1; }
 
-  .p2 .img { background: var(--color-grape-deep); position: relative; overflow: hidden; }
-  .p2 .img::before { content: ""; position: absolute; top: 14%; right: 18%; width: 30%; aspect-ratio: 1; background: var(--color-lemon); border-radius: var(--radius-circle); }
-  .p2 .img::after  { content: "🐈‍⬛"; font-size: 88px; filter: saturate(0); position: relative; z-index: 2; }
-  .p1 .img { background-color: var(--color-pink); }
-  .p3 .img { background-color: var(--color-orange); }
-  .p4 .img { background-color: var(--color-mint); }
-
-  @media (max-width: 1024px) {
-    .p1 { top: 16px;  left: 0;    width: 148px; }
-    .p2 { top: 48px;  left: 124px; width: 168px; }
-    .p3 { top: 148px; left: 36px;  width: 140px; }
-    .p4 { top: 182px; left: 176px; width: 134px; }
-    .p2 .img::after { font-size: 52px; }
-  }
+  /* Decorative cat-under-moon art shown only when no image is uploaded for p2 */
+  .p2:not(.has-image) .img { background: var(--color-grape-deep); }
+  .p2:not(.has-image) .img::before { content: ""; position: absolute; top: 14%; right: 18%; width: 30%; aspect-ratio: 1; background: var(--color-lemon); border-radius: var(--radius-circle); }
+  .p2:not(.has-image) .img::after  { content: "🐈‍⬛"; font-size: 30cqw; filter: saturate(0); position: relative; z-index: 2; }
+  .p1:not(.has-image) .img { background-color: var(--color-pink); }
+  .p3:not(.has-image) .img { background-color: var(--color-orange); }
+  .p4:not(.has-image) .img { background-color: var(--color-mint); }
 </style>

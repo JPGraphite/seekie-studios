@@ -1,0 +1,20 @@
+{
+  "eyebrow": "Geelong · Surf Coast · Bellarine",
+  "headline": "Paint, <br>\n<span class=\"gw\">sip</span>, <em>repeat.</em>",
+  "lede": "Private mobile paint & sip parties - we roll up to your house, your venue, your bar. Fully BYO, custom paintings to suit your theme, all the canvases, easels & aprons sorted. You bring the crew & the playlist. 🎨",
+  "primaryCtaLabel": "Book a private party",
+  "primaryCtaHref": "#book",
+  "secondaryCtaLabel": "See upcoming events",
+  "secondaryCtaHref": "#events",
+  "stats": [
+    { "value": "2-3h", "label": "Session length" },
+    { "value": "BYO", "label": "Drinks & venue" },
+    { "value": "∞", "label": "Custom themes" }
+  ],
+  "polaroids": [
+    { "caption": "happy mess ✿", "image": null },
+    { "caption": "starry cat night", "image": null },
+    { "caption": "grand opening!", "image": null },
+    { "caption": "bellarine birthday", "image": null }
+  ]
+}

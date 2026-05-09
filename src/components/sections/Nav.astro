@@ -1,29 +1,68 @@
 ---
+import { getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import Button from '../ui/Button.astro';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { resolveSettingsImage } from '../../lib/settings-images';
 
-const logoSvg = readFileSync(join(process.cwd(), 'public/assets/seekie-studios-logo.svg'), 'utf-8');
+const entry = await getEntry('settings', 'nav');
+const data = (entry?.data ?? {}) as {
+  brandName: string;
+  tagline: string;
+  logo?: string | null;
+  navLinks: Array<{ label: string; href: string }>;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+const logo = await resolveSettingsImage(data.logo);
 ---
 <nav class="top">
   <div class="wrap row">
     <a href="/" class="brand">
-      <div class="brand-logo" set:html={logoSvg}></div>
+      <div class="brand-logo">
+        {logo && <Image src={logo} alt={data.brandName} width={108} height={108} />}
+      </div>
       <div>
-        <div class="bn">Seekie Studios</div>
-        <div class="bs">Paint · Sip · Geelong</div>
+        <div class="bn">{data.brandName}</div>
+        <div class="bs">{data.tagline}</div>
       </div>
     </a>
 
-    <ul>
-      <li><a href="#what">What we do</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#astray">Astray Bar</a></li>
-      <li><a href="#feed">The Feed</a></li>
-      <li><a href="#book">Book</a></li>
+    <ul class="desktop-links">
+      {data.navLinks.map((link) => (
+        <li><a href={link.href}>{link.label}</a></li>
+      ))}
     </ul>
 
-    <Button href="#book" variant="nav" size="sm">Book a Party →</Button>
+    <div class="row-right">
+      <Button href={data.ctaHref} variant="nav" size="sm" class="cta-desktop">{data.ctaLabel}</Button>
+      <button
+        type="button"
+        class="hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-mobile-toggle
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
+    <ul>
+      {data.navLinks.map((link) => (
+        <li>
+          <a href={link.href} data-mobile-link>
+            <span class="dot" aria-hidden="true"></span>
+            <span>{link.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a href={data.ctaHref} class="cta-mobile" data-mobile-link>
+      {data.ctaLabel}
+    </a>
   </div>
 </nav>
 
@@ -46,21 +85,179 @@ const logoSvg = readFileSync(join(process.cwd(), 'public/assets/seekie-studios-l
     border: var(--border-base) solid var(--color-grape); background: #FFD4DD;
     overflow: hidden; flex: none; display: grid; place-items: center;
   }
-  .brand-logo svg { width: 100%; height: 100%; display: block; }
+  .brand-logo :global(img) { width: 100%; height: 100%; display: block; object-fit: cover; }
   .bn { font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-grape); line-height: var(--leading-tight); }
   .bs { font-family: var(--font-body); font-size: var(--text-2xs); letter-spacing: var(--tracking-sub); text-transform: uppercase; color: var(--color-plum); margin-top: var(--space-1); }
 
-  ul { display: flex; gap: var(--space-7); list-style: none; }
-  ul a {
+  .desktop-links { display: flex; gap: var(--space-7); list-style: none; }
+  .desktop-links a {
     text-decoration: none; font-weight: 600; font-size: var(--text-body); color: var(--color-grape);
     padding: 6px 2px; border-bottom: var(--border-base) solid transparent; transition: var(--duration-base);
   }
-  ul a:hover { border-color: var(--color-pink); }
+  .desktop-links a:hover { border-color: var(--color-pink); }
 
-  @media (max-width: 1024px) { ul { display: none; } }
+  .row-right { display: flex; align-items: center; gap: var(--space-3); }
+
+  .hamburger {
+    display: none;
+    width: 44px; height: 44px;
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 5px;
+    border: var(--border-base) solid var(--color-grape);
+    border-radius: var(--radius-input);
+    background: var(--color-cream);
+    transition: transform var(--duration-base), background var(--duration-base), box-shadow var(--duration-base);
+    flex: none;
+  }
+  .hamburger:hover {
+    background: var(--color-lemon);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-sticker);
+  }
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2.5px;
+    background: var(--color-grape);
+    border-radius: 2px;
+    transition: transform var(--duration-medium) cubic-bezier(.2,.7,.2,1.2),
+                opacity var(--duration-fast);
+    transform-origin: center;
+  }
+  .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    backdrop-filter: blur(10px);
+    background: rgba(239,217,255,.96);
+    border-bottom: var(--border-base) solid var(--color-grape);
+    padding: var(--space-4) var(--wrap-x) var(--space-5);
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: opacity var(--duration-medium) ease,
+                transform var(--duration-medium) cubic-bezier(.2,.7,.2,1.1);
+  }
+  .mobile-menu[data-open="true"] {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-1); }
+  .mobile-menu a {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-3);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    color: var(--color-grape);
+    border-radius: var(--radius-inner);
+    transition: background var(--duration-base),
+                color var(--duration-base),
+                transform var(--duration-base);
+  }
+  .mobile-menu a .dot {
+    width: 10px; height: 10px; border-radius: var(--radius-circle);
+    background: var(--color-pink);
+    transition: transform var(--duration-base), background var(--duration-base);
+    flex: none;
+  }
+  .mobile-menu a:hover,
+  .mobile-menu a:focus-visible {
+    background: var(--color-grape);
+    color: var(--color-lemon);
+    transform: translateX(4px);
+    outline: none;
+  }
+  .mobile-menu a:hover .dot,
+  .mobile-menu a:focus-visible .dot {
+    background: var(--color-lemon);
+    transform: scale(1.4);
+  }
+
+  .cta-mobile {
+    display: flex; justify-content: center; align-items: center;
+    margin-top: var(--space-4);
+    background: var(--color-pink); color: var(--color-white) !important;
+    padding: var(--space-3-5) var(--space-5);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    box-shadow: var(--shadow-btn);
+    transition: transform var(--duration-base), box-shadow var(--duration-base);
+  }
+  .cta-mobile:hover,
+  .cta-mobile:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-btn-hover);
+    background: var(--color-pink) !important;
+    color: var(--color-white) !important;
+  }
+
+  @media (max-width: 1024px) {
+    .desktop-links { display: none; }
+    .hamburger { display: inline-flex; }
+    .mobile-menu { display: block; }
+  }
   @media (max-width: 680px) {
     .bs { display: none; }
     .brand-logo { width: 40px; height: 40px; }
     .bn { font-size: var(--text-lg); }
   }
+  @media (max-width: 420px) {
+    .cta-desktop { display: none; }
+  }
 </style>
+
+<script>
+  const init = () => {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+    const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+    if (!toggle || !menu) return;
+
+    const links = menu.querySelectorAll<HTMLAnchorElement>('[data-mobile-link]');
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.dataset.open = String(open);
+      menu.setAttribute('aria-hidden', String(!open));
+    };
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      setOpen(!isOpen);
+    });
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => setOpen(false));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      const target = e.target as Node;
+      if (menu.contains(target) || toggle.contains(target)) return;
+      setOpen(false);
+    });
+
+    const mql = window.matchMedia('(min-width: 1025px)');
+    const onChange = () => {
+      if (mql.matches) setOpen(false);
+    };
+    if (typeof mql.addEventListener === 'function') {
+      mql.addEventListener('change', onChange);
+    } else {
+      mql.addListener(onChange);
+    }
+  };
+
+  init();
+</script>

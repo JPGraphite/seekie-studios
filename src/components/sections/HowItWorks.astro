@@ -1,62 +1,56 @@
 ---
+import { getEntry } from 'astro:content';
 import SectionHeading from '../ui/SectionHeading.astro';
 
-const steps = [
-  {
-    num: '01',
-    title: 'Pick a painting',
-    body: "Choose from our catalogue of crowd-favourites, or tell us your theme and we'll design something custom — Taylor Swift era? French Riviera? Black cat under the moon? Done.",
-    icon: `<path d="M3 12c0-5 4-9 9-9s9 4 9 9c0 3-2 4-4 4s-2 2-2 3 1 2-1 3c-3 1-11-2-11-10z"/><circle cx="7" cy="9" r="1.4" fill="var(--color-cream)"/><circle cx="11" cy="6" r="1.4" fill="var(--color-cream)"/><circle cx="15" cy="7" r="1.4" fill="var(--color-cream)"/><circle cx="17" cy="11" r="1.4" fill="var(--color-cream)"/>`,
-    color: 'var(--color-pink)',
-  },
-  {
-    num: '02',
-    title: 'We bring it all',
-    body: "Canvases, easels, paints, brushes, aprons, tablecloths — the whole studio packs into the van and unpacks at your place. You do not have to lift a paintbrush ahead of time.",
-    icon: `<path d="M5 21h14"/><path d="M9 21V8a3 3 0 0 1 6 0v13"/><path d="M9 12h6"/>`,
-    color: 'var(--color-orange)',
-  },
-  {
-    num: '03',
-    title: 'BYO & sip',
-    body: "Bring whatever you're drinking — bubbles, longnecks, lemon-lime & bitters, all welcome. We guide you through, stroke by stroke, for 2–3 messy, brilliant hours.",
-    icon: `<path d="M8 3v4l-2 2v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9l-2-2V3"/><path d="M8 3h8"/><path d="M10 12h4"/>`,
-    color: 'var(--color-mint)',
-  },
-];
+const entry = await getEntry('settings', 'how-it-works');
+const data = (entry?.data ?? {}) as {
+  tag: string;
+  title: string;
+  subtitle: string;
+  steps: Array<{ title: string; body: string; icon: string; color: string }>;
+  perks: string[];
+};
 
-const perks = [
-  '<b>Operating across</b> Geelong, Surf Coast & the Bellarine. Other locations by request.',
-  '<b>Mobile setup</b> — we come to you, or your venue (with their permission)',
-  '<b>Small groups welcome</b> — book the whole room or just a few mates',
-  '<b>Custom catalogue</b> — pick from our designs or commission a one-off',
-  '<b>Tables & chairs</b> available at extra cost by prior arrangement',
-];
+// Predefined icon registry - editors pick by name in the CMS
+const iconPaths: Record<string, string> = {
+  palette: `<path d="M3 12c0-5 4-9 9-9s9 4 9 9c0 3-2 4-4 4s-2 2-2 3 1 2-1 3c-3 1-11-2-11-10z"/><circle cx="7" cy="9" r="1.4" fill="var(--color-cream)"/><circle cx="11" cy="6" r="1.4" fill="var(--color-cream)"/><circle cx="15" cy="7" r="1.4" fill="var(--color-cream)"/><circle cx="17" cy="11" r="1.4" fill="var(--color-cream)"/>`,
+  easel: `<path d="M5 21h14"/><path d="M9 21V8a3 3 0 0 1 6 0v13"/><path d="M9 12h6"/>`,
+  glass: `<path d="M8 3v4l-2 2v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9l-2-2V3"/><path d="M8 3h8"/><path d="M10 12h4"/>`,
+};
+
+const colorVar: Record<string, string> = {
+  pink: 'var(--color-pink)',
+  orange: 'var(--color-orange)',
+  mint: 'var(--color-mint)',
+  lemon: 'var(--color-lemon)',
+  plum: 'var(--color-plum)',
+  grape: 'var(--color-grape)',
+};
 ---
 <section class="what" id="what">
   <div class="wrap">
     <SectionHeading
-      tag="how it works"
-      title="A paint party,<br>delivered to your door."
-      subtitle="We're a small mobile studio based on the Bellarine. We pack up everything you need and turn your living room, backyard or function space into the studio for the night."
+      tag={data.tag}
+      title={data.title}
+      subtitle={data.subtitle}
     />
 
     <div class="feature-grid">
-      {steps.map((step, i) => (
+      {data.steps.map((step, i) => (
         <div class={`feature reveal${i > 0 ? ` reveal-d${i + 1}` : ''}`}>
-          <div class="num">{step.num}</div>
-          <div class="icon-circle" style={`background:${step.color}`}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-cream)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" set:html={step.icon} />
+          <div class="num">{String(i + 1).padStart(2, '0')}</div>
+          <div class="icon-circle" style={`background:${colorVar[step.color] ?? colorVar.pink}`}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-cream)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" set:html={iconPaths[step.icon] ?? iconPaths.palette} />
           </div>
           <h3>{step.title}</h3>
-          <p set:html={step.body} />
+          <p>{step.body}</p>
         </div>
       ))}
     </div>
 
     <div class="what-rows">
       <ul>
-        {perks.map(perk => (
+        {data.perks.map(perk => (
           <li>
             <span class="check">✓</span>
             <div set:html={perk} />

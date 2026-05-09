@@ -1,0 +1,14 @@
+{
+  "brandName": "Seekie Studios",
+  "tagline": "Paint · Sip · Geelong",
+  "logo": "/src/assets/settings/seekie-studios-logo.svg",
+  "navLinks": [
+    { "label": "What we do", "href": "#what" },
+    { "label": "Events", "href": "#events" },
+    { "label": "Astray Bar", "href": "#astray" },
+    { "label": "The Feed", "href": "#feed" },
+    { "label": "Book", "href": "#book" }
+  ],
+  "ctaLabel": "Book a Party →",
+  "ctaHref": "#book"
+}

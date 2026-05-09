@@ -1,47 +1,63 @@
 ---
+import { getEntry } from 'astro:content';
 import FormField from '../ui/FormField.astro';
 import Button from '../ui/Button.astro';
 
-const regionOptions = [
-  { label: 'Geelong',          value: 'geelong' },
-  { label: 'Surf Coast',       value: 'surf-coast' },
-  { label: 'Bellarine',        value: 'bellarine' },
-  { label: 'Other (let us know)', value: 'other' },
-];
+const entry = await getEntry('settings', 'booking-form');
+const data = (entry?.data ?? {}) as {
+  heading: string;
+  intro: string;
+  sidebarLocation: string;
+  sidebarDuration: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  groupSizeLabel: string;
+  groupSizePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  dateLabel: string;
+  regionLabel: string;
+  regionOptions: Array<{ label: string; value: string }>;
+  themeLabel: string;
+  themePlaceholder: string;
+  submitLabel: string;
+  successMessage: string;
+  errorMessage: string;
+};
+
+const siteEntry = await getEntry('settings', 'site');
+const site = (siteEntry?.data ?? {}) as { email?: string };
+const contactEmail = site.email ?? 'seekie.studios@gmail.com';
 ---
 <section class="book" id="book">
   <div class="wrap">
     <div class="book-card">
       <div class="inner">
         <div>
-          <h2 class="reveal">Got a date<br>in mind? <span class="pink">Let's paint.</span></h2>
-          <p class="reveal reveal-d2">
-            Hens parties, milestone birthdays, book club, team builds, divorce parties, just-because parties.
-            Tell us the vibe and we'll come back with a quote within 24 hours.
-          </p>
+          <h2 class="reveal" set:html={data.heading} />
+          <p class="reveal reveal-d2">{data.intro}</p>
           <div class="contact-list">
-            <div>📧 <a href="mailto:seekie.studios@gmail.com">seekie.studios@gmail.com</a></div>
-            <div>📍 Geelong · Surf Coast · Bellarine (other locations on request)</div>
-            <div>⏱ Sessions run approx. 2–3 hours</div>
+            <div>📧 <a href={`mailto:${contactEmail}`}>{contactEmail}</a></div>
+            <div>{data.sidebarLocation}</div>
+            <div>{data.sidebarDuration}</div>
           </div>
         </div>
 
-        <form class="book-form" id="bookForm" novalidate>
-          <!-- Honeypot: bots fill this, humans don't see it -->
+        <form class="book-form" id="bookForm" novalidate data-submit-label={data.submitLabel} data-success={data.successMessage} data-error={data.errorMessage}>
           <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
 
           <div class="row2">
-            <FormField label="Your name"  name="name"       type="text"   placeholder="Aria"  required />
-            <FormField label="Group size" name="group_size" type="number" placeholder="12" min="2" required />
+            <FormField label={data.nameLabel}      name="name"       type="text"   placeholder={data.namePlaceholder}      required />
+            <FormField label={data.groupSizeLabel} name="group_size" type="number" placeholder={data.groupSizePlaceholder} min="2" required />
           </div>
-          <FormField label="Email" name="email" type="email" placeholder="you@email.com" required />
+          <FormField label={data.emailLabel} name="email" type="email" placeholder={data.emailPlaceholder} required />
           <div class="row2">
-            <FormField label="Date"   name="date"   type="date"   required />
-            <FormField label="Region" name="region" type="select" options={regionOptions} required />
+            <FormField label={data.dateLabel}   name="date"   type="date"   required />
+            <FormField label={data.regionLabel} name="region" type="select" options={data.regionOptions} required />
           </div>
-          <FormField label="Theme / vibe" name="message" type="textarea" placeholder="Hens party — coastal florals + bottomless mimosas" />
+          <FormField label={data.themeLabel} name="message" type="textarea" placeholder={data.themePlaceholder} />
 
-          <Button type="submit" variant="submit" class="mt-1.5">Send enquiry →</Button>
+          <Button type="submit" variant="submit" class="mt-1.5">{data.submitLabel}</Button>
           <div class="sent" aria-live="polite"></div>
         </form>
       </div>
@@ -52,6 +68,9 @@ const regionOptions = [
 <script>
   const form = document.getElementById('bookForm') as HTMLFormElement | null;
   const sentEl = form?.querySelector<HTMLElement>('.sent');
+  const submitLabel = form?.dataset.submitLabel ?? 'Send enquiry →';
+  const successMessage = form?.dataset.success ?? "Thanks - we'll be in touch within 24h ✿";
+  const errorMessage = form?.dataset.error ?? 'Something went wrong - please email us directly.';
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -68,13 +87,13 @@ const regionOptions = [
 
       if (data.ok) {
         form.querySelectorAll<HTMLElement>('.field, .row2, button[type="submit"]').forEach(el => el.style.display = 'none');
-        if (sentEl) { sentEl.textContent = "Thanks — we'll be in touch within 24h ✿"; sentEl.style.display = 'block'; }
+        if (sentEl) { sentEl.textContent = successMessage; sentEl.style.display = 'block'; }
       } else {
         throw new Error(data.error ?? 'Unknown error');
       }
     } catch {
-      if (btn) { btn.disabled = false; btn.textContent = 'Send enquiry →'; }
-      if (sentEl) { sentEl.textContent = 'Something went wrong — please email us directly.'; sentEl.style.display = 'block'; }
+      if (btn) { btn.disabled = false; btn.textContent = submitLabel; }
+      if (sentEl) { sentEl.textContent = errorMessage; sentEl.style.display = 'block'; }
     }
   });
 </script>
@@ -104,7 +123,7 @@ const regionOptions = [
   @media (max-width: 1024px) { .inner { grid-template-columns: 1fr; gap: var(--space-8); } }
 
   h2 { color: var(--color-lemon); font-size: clamp(40px, 5vw, 68px); margin-bottom: var(--space-4-5); }
-  h2 .pink { color: var(--color-pink); }
+  h2 :global(.pink) { color: var(--color-pink); }
   p  { color: #F8E8FF; font-size: var(--text-lg); max-width: 480px; margin-bottom: var(--space-6); line-height: var(--leading-base); }
 
   .contact-list { display: flex; flex-direction: column; gap: var(--space-2); color: #F8E8FF; font-size: var(--text-body); }

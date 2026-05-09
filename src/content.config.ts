@@ -23,4 +23,12 @@ const events = defineCollection({
   }),
 });
 
-export const collections = { events };
+// One collection covering every settings singleton JSON file.
+// Each singleton's shape is validated by Keystatic; we use a permissive
+// passthrough schema here and cast to typed interfaces in components.
+const settings = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/settings' }),
+  schema: z.object({}).passthrough(),
+});
+
+export const collections = { events, settings };
