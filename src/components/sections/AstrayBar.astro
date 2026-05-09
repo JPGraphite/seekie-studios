@@ -11,8 +11,8 @@ const perks = [
 ---
 <section class="astray" id="astray">
   <svg class="deco-svg" viewBox="0 0 400 200" aria-hidden="true">
-    <path d="M-20 100 C 40 20, 100 180, 160 100 S 280 20, 340 100 S 460 180, 520 100" stroke="#F5CF3E" stroke-width="14" stroke-linecap="round" fill="none"/>
-    <path d="M-20 100 C 40 20, 100 180, 160 100 S 280 20, 340 100 S 460 180, 520 100" stroke="#EC3B8E" stroke-width="8" stroke-linecap="round" fill="none" transform="translate(0,-20)"/>
+    <path d="M-20 100 C 40 20, 100 180, 160 100 S 280 20, 340 100 S 460 180, 520 100" stroke="var(--color-lemon)" stroke-width="14" stroke-linecap="round" fill="none"/>
+    <path d="M-20 100 C 40 20, 100 180, 160 100 S 280 20, 340 100 S 460 180, 520 100" stroke="var(--color-pink)" stroke-width="8" stroke-linecap="round" fill="none" transform="translate(0,-20)"/>
   </svg>
 
   <div class="wrap">
@@ -21,8 +21,8 @@ const perks = [
         <SectionHeading
           tag="in partnership with"
           title="Sip with us at<br>Astray Bar."
-          tagColor="#6CD7C2"
-          titleColor="#F5CF3E"
+          tagColor="var(--color-mint)"
+          titleColor="var(--color-lemon)"
           align="left"
         />
         <p class="lede2 reveal reveal-d2">
@@ -62,61 +62,61 @@ const perks = [
 
 <style>
   .astray {
-    background: #4A1F8C; color: #FFF6E8;
-    position: relative; overflow: hidden; padding: 110px 0; z-index: 2;
+    background: var(--color-grape); color: var(--color-cream);
+    position: relative; overflow: hidden; padding: var(--section-pad) 0; z-index: 2;
   }
 
   .deco-svg {
-    position: absolute; top: 60px; right: -100px; width: 300px; opacity: .5;
+    position: absolute; top: 60px; right: 0px; width: 100%; opacity: .5;
     pointer-events: none;
   }
 
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-  @media (max-width: 880px) { .grid2 { grid-template-columns: 1fr; } }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: center; }
+  @media (max-width: 1024px) { .grid2 { grid-template-columns: 1fr; } }
 
-  .lede2 { font-size: 19px; color: #F8E8FF; max-width: 520px; line-height: 1.55; margin-bottom: 24px; }
+  .lede2 { font-size: 19px; color: #F8E8FF; max-width: 680px; line-height: var(--leading-base); margin-bottom: var(--space-6); }
 
-  .perks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 28px 0 32px; }
+  .perks { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3-5); margin: var(--space-7) 0 var(--space-8); }
   .perk {
-    background: rgba(255,255,255,.06); border: 1.5px solid rgba(245,207,62,.3);
-    border-radius: 16px; padding: 16px 18px;
+    background: rgba(255,255,255,.06); border: var(--border-fine) solid rgba(245,207,62,.3);
+    border-radius: var(--radius-badge); padding: var(--space-4) var(--space-4-5);
   }
-  .perk h4 { font-family: "Caprasimo", serif; font-size: 18px; color: #F5CF3E; margin-bottom: 4px; }
-  .perk p  { font-size: 14px; color: #F8E8FF; line-height: 1.4; }
+  .perk h4 { font-family: var(--font-groove); font-size: var(--text-lg); color: var(--color-lemon); margin-bottom: var(--space-1); }
+  .perk p  { font-size: var(--text-tag); color: #F8E8FF; line-height: var(--leading-compact); }
 
   .astray-card {
     position: relative; aspect-ratio: 4/5;
-    background: #2E0F5C; border: 3px solid #F5CF3E; border-radius: 24px;
-    padding: 28px; display: flex; flex-direction: column; justify-content: flex-end;
+    background: var(--color-grape-deep); border: var(--border-rule) solid var(--color-lemon); border-radius: var(--radius-card);
+    padding: var(--space-7); display: flex; flex-direction: column; justify-content: flex-end;
     box-shadow: 0 24px 60px -10px rgba(0,0,0,.45); overflow: hidden;
   }
   .astray-card::before {
     content: ""; position: absolute; top: -12%; right: -15%; width: 65%; aspect-ratio: 1;
-    background: #EC3B8E; border-radius: 55% 45% 60% 40%/45% 55% 45% 55%;
+    background: var(--color-pink); border-radius: 55% 45% 60% 40%/45% 55% 45% 55%;
   }
   .astray-card::after {
     content: ""; position: absolute; left: -10%; bottom: -15%; width: 55%; aspect-ratio: 1;
-    background: #F5CF3E; border-radius: 50%;
+    background: var(--color-lemon); border-radius: var(--radius-circle);
   }
 
   .label {
     position: relative; display: inline-block; align-self: flex-start; margin-bottom: auto;
-    background: #F5CF3E; color: #4A1F8C;
-    padding: 8px 14px; border-radius: 999px;
-    font-family: "Bagel Fat One", serif; font-size: 14px; letter-spacing: .06em;
+    background: var(--color-lemon); color: var(--color-grape);
+    padding: var(--space-2) var(--space-3-5); border-radius: var(--radius-pill);
+    font-family: var(--font-display); font-size: var(--text-tag); letter-spacing: .06em;
   }
   h3 {
-    position: relative; font-family: "Bagel Fat One", serif; font-size: 48px;
-    color: #FFF6E8; line-height: .95; margin-bottom: 14px;
+    position: relative; font-family: var(--font-display); font-size: var(--text-5xl);
+    color: var(--color-cream); line-height: var(--leading-heading); margin-bottom: var(--space-3-5);
   }
-  h3 span { color: #F5CF3E; }
+  h3 span { color: var(--color-lemon); }
 
-  .menu-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 14px 0; position: relative; }
-  .menu-list li { display: flex; align-items: center; gap: 10px; color: #F8E8FF; font-size: 15px; }
-  .menu-list li::before { content: ""; flex: none; width: 20px; height: 1.5px; background: #F5CF3E; }
+  .menu-list { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); margin: var(--space-3-5) 0; position: relative; }
+  .menu-list li { display: flex; align-items: center; gap: var(--space-2); color: #F8E8FF; font-size: var(--text-body); }
+  .menu-list li::before { content: ""; flex: none; width: 20px; height: 1.5px; background: var(--color-lemon); }
 
-  .meta { position: relative; display: flex; gap: 18px; flex-wrap: wrap; color: #F8E8FF; font-size: 14px; }
-  .meta b { color: #F5CF3E; }
+  .meta { position: relative; display: flex; gap: var(--space-4-5); flex-wrap: wrap; color: #F8E8FF; font-size: var(--text-tag); }
+  .meta b { color: var(--color-lemon); }
 
-  .arr { transition: .2s; display: inline-block; }
+  .arr { transition: var(--duration-base); display: inline-block; }
 </style>

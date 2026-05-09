@@ -91,9 +91,9 @@ https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Caprasimo&family=D
   - `b2` mint, bottom-left, 320px
   - `b3` pink @ .55 opacity, mid-right, 120px
 - **Two rainbow ribbon SVGs** (`.hero-squiggle`, `.hero-squiggle-2`) — width `120vw`, viewBox `0 0 1600 200/220`, `preserveAspectRatio="none"`. Each has 4 stacked stroked cubic-Bézier paths in pink/orange/lemon/mint (top) and purple/pink/orange/lemon (bottom). Strokes range 24px → 6px, all `stroke-linecap="round"`. Paths start at `x=-100` and end at `x=1800` so they enter and exit cleanly off-screen.
-- **2-column grid** (1.05 / .95) collapsing at 880px:
+- **2-column grid** (1.05 / .95) collapsing at 1024px:
   - Left: rotated eyebrow pill ("GEELONG · SURF COAST · BELLARINE") · h1 `Paint, & sip, repeat.` (with rotated orange ampersand, pink "sip", purple "repeat" with lemon underline ellipse) · 20px lede · two CTAs (pink primary w/ hard grape shadow + grape outline secondary) · 3 hero stats ("2–3h" / "BYO" / "∞").
-  - Right: `.stage` 560px-tall holding 4 absolutely-positioned `.polaroid` cards at varying rotations (-7°, 4°, -3°, 8°). Each is white, 14px padded, with hard purple shadow, image area `aspect-ratio:3/4`, and a Caveat handwritten caption. The starry-cat polaroid uses a solid `#3a1a6a` bg + a `::before` lemon circle (the moon).
+  - Right: `.stage` 680px-tall holding 4 absolutely-positioned `.polaroid` cards at varying rotations (-7°, 4°, -3°, 8°). Each is white, 14px padded, with hard purple shadow, image area `aspect-ratio:3/4`, and a Caveat handwritten caption. The starry-cat polaroid uses a solid `#3a1a6a` bg + a `::before` lemon circle (the moon).
 
 ### 3. Marquee Ticker
 - Full-bleed grape bar with 3px ink top/bottom borders, 14px vertical padding.
@@ -121,14 +121,14 @@ https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Caprasimo&family=D
 
 ### 6. Astray Bar partnership (`#astray`)
 - Grape background, cream foreground, decorative SVG ribbon top-right at .5 opacity.
-- 2-column grid (collapsing at 880px).
+- 2-column grid (collapsing at 1024px).
 - Left: mint section-tag ("IN PARTNERSHIP WITH"), lemon h2 ("Sip with us at Astray Bar."), 19px lede, 2×2 perk grid (translucent white cards with lemon Caprasimo h4 + 14px body), pink CTA.
 - Right: `.astray-card` — 4:5, deep grape bg, 3px lemon border, 24px radius. `::before` pink organic blob top-right, `::after` lemon circle bottom-left. Lemon "Next session ✺" label, 48px h3 with lemon inline span, dashed menu list, meta row with lemon `<b>` highlights.
 
 ### 7. Social Feed (`#feed`)
 - Cream background.
 - Tab buttons (Instagram active by default / Facebook) — 8 posts each, swap via body class `feed-ig` / `feed-fb`.
-- 4-col grid (3 @ 980px, 2 @ 560px) with white card chrome (2.5px grape border, 24px radius, 6px hard grape shadow), 8px inner gap, 14px tile radius.
+- 4-col grid (3 @ 1024px, 2 @ 680px) with white card chrome (2.5px grape border, 24px radius, 6px hard grape shadow), 8px inner gap, 14px tile radius.
 - Each `.post`: 1:1 ratio, solid colour bg + `::before` organic shape (no gradients). Hidden monospace placeholder label fades in via `.overlay` gradient on hover with engagement counts. `.video` posts get a corner play badge.
 
 ### 8. Book / Contact (`#book`)

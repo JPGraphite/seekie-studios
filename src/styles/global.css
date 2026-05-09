@@ -3,13 +3,136 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* ── Colours ──────────────────────────────────────────────── */
+    --color-grape:        #4A1F8C;
+    --color-grape-deep:   #2E0F5C;
+    --color-plum:         #7B36C7;
+    --color-lavender:     #EFD9FF;
+    --color-lavender-mid: #E1BFFF;
+    --color-cream:        #FFF6E8;
+    --color-pink:         #EC3B8E;
+    --color-orange:       #F37A2B;
+    --color-lemon:        #F5CF3E;
+    --color-mint:         #6CD7C2;
+    --color-ink:          #2A0F4F;
+    --color-text-muted:   #3d2666;
+    --color-white:        #ffffff;
+
+    /* RGB channel triples — for rgba() in scoped CSS only */
+    --rgb-grape:  74, 31, 140;
+    --rgb-pink:   236, 59, 142;
+    --rgb-ink:    42, 15, 79;
+    --rgb-lemon:  245, 207, 62;
+    --rgb-orange: 243, 122, 43;
+
+    /* ── Fonts ────────────────────────────────────────────────── */
+    --font-display: "Bagel Fat One", "Caprasimo", serif;
+    --font-groove:  "Caprasimo", serif;
+    --font-body:    "DM Sans", system-ui, sans-serif;
+    --font-hand:    "Caveat", cursive;
+    --font-mono:    "DM Mono", "Courier New", monospace;
+
+    /* ── Font sizes ───────────────────────────────────────────── */
+    --text-2xs:  11px;
+    --text-xs:   12px;
+    --text-sm:   13px;
+    --text-tag:  14px;
+    --text-body: 15px;
+    --text-md:   17px;
+    --text-lg:   18px;
+    --text-xl:   22px;
+    --text-2xl:  26px;
+    --text-3xl:  28px;
+    --text-4xl:  34px;
+    --text-5xl:  48px;
+
+    /* ── Letter spacing ───────────────────────────────────────── */
+    --tracking-normal:  .04em;
+    --tracking-meta:    .1em;
+    --tracking-label:   .16em;
+    --tracking-sub:     .18em;
+    --tracking-eyebrow: .22em;
+    --tracking-tag:     .3em;
+
+    /* ── Line heights ─────────────────────────────────────────── */
+    --leading-heading: .95;
+    --leading-tight:   1;
+    --leading-snug:    1.25;
+    --leading-compact: 1.4;
+    --leading-base:    1.55;
+
+    /* ── Spacing scale — 8px base, 4px half-steps ────────────── */
+    --space-1:    4px;
+    --space-2:    8px;
+    --space-3:   12px;
+    --space-3-5: 14px;
+    --space-4:   16px;
+    --space-4-5: 18px;
+    --space-5:   20px;
+    --space-5-5: 22px;
+    --space-6:   24px;
+    --space-7:   28px;
+    --space-8:   32px;
+    --space-10:  40px;
+    --space-11:  44px;
+    --space-12:  48px;
+    --space-14:  56px;
+    --space-16:  64px;
+    --space-20:  80px;
+    --space-24:  96px;
+    --space-28: 112px;
+    --space-36: 144px;
+
+    /* ── Semantic layout spacing ──────────────────────────────── */
+    --section-pad:    112px;
+    --section-pad-sm:  88px;
+    --section-pad-lg: 144px;
+    --section-foot-t:  64px;
+    --section-foot-b:  32px;
+    --wrap-x:          32px;
+    --wrap-x-mobile:   20px;
+
+    /* ── Border radius ────────────────────────────────────────── */
+    --radius-pill:    9999px;
+    --radius-circle:  50%;
+    --radius-card-lg: 32px;
+    --radius-card:    24px;
+    --radius-card-sm: 20px;
+    --radius-badge:   16px;
+    --radius-inner:   14px;
+    --radius-input:   12px;
+
+    /* ── Border widths ────────────────────────────────────────── */
+    --border-fine:   1.5px;
+    --border-base:   2px;
+    --border-thick:  2.5px;
+    --border-rule:   3px;
+
+    /* ── Shadows ──────────────────────────────────────────────── */
+    --shadow-card:          6px 6px 0 var(--color-grape);
+    --shadow-card-hover:    9px 9px 0 var(--color-grape);
+    --shadow-card-offset:   8px 8px 0 var(--color-grape);
+    --shadow-btn:           4px 4px 0 var(--color-grape);
+    --shadow-btn-hover:     6px 6px 0 var(--color-grape);
+    --shadow-btn-nav:       3px 3px 0 var(--color-pink);
+    --shadow-btn-nav-hover: 5px 5px 0 var(--color-pink);
+    --shadow-sticker:       3px 3px 0 var(--color-grape);
+
+    /* ── Transitions ──────────────────────────────────────────── */
+    --duration-fast:   .15s;
+    --duration-base:   .2s;
+    --duration-medium: .25s;
+    --duration-slow:   .3s;
+  }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: "DM Sans", system-ui, sans-serif;
-    background: #EFD9FF;
-    color: #2A0F4F;
+    font-family: var(--font-body);
+    background: var(--color-lavender);
+    color: var(--color-ink);
     overflow-x: hidden;
     line-height: 1.55;
   }
@@ -31,11 +154,15 @@
   }
 
   h1, h2, h3 {
-    font-family: "Bagel Fat One", "Caprasimo", serif;
+    font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: .01em;
-    line-height: .95;
-    color: #4A1F8C;
+    line-height: var(--leading-heading);
+    color: var(--color-grape);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
   }
 
   a { color: inherit; }
@@ -46,22 +173,25 @@
   .wrap {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 var(--wrap-x);
     position: relative;
     z-index: 2;
   }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 var(--wrap-x-mobile); }
+  }
 
-  .font-groove { font-family: "Caprasimo", serif; }
-  .font-hand { font-family: "Caveat", cursive; font-weight: 700; }
+  .font-groove { font-family: var(--font-groove); }
+  .font-hand { font-family: var(--font-hand); font-weight: 700; }
 
   .section-tag {
     display: inline-block;
-    font-family: "Caprasimo", serif;
-    font-size: 14px;
-    letter-spacing: .3em;
+    font-family: var(--font-groove);
+    font-size: var(--text-tag);
+    letter-spacing: var(--tracking-tag);
     text-transform: uppercase;
-    color: #EC3B8E;
-    margin-bottom: 14px;
+    color: var(--color-pink);
+    margin-bottom: var(--space-3-5);
   }
   .section-tag::before { content: "❋ "; }
   .section-tag::after  { content: " ❋"; }

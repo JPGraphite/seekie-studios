@@ -53,75 +53,75 @@
 </section>
 
 <style>
-  .gallery { background: #FFF6E8; position: relative; padding: 110px 0; z-index: 2; }
+  .gallery { background: var(--color-cream); position: relative; padding: var(--section-pad) 0; z-index: 2; }
 
-  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 56px; flex-wrap: wrap; }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-8); margin-bottom: var(--space-14); flex-wrap: wrap; }
   .section-head h2 { font-size: clamp(44px, 6vw, 80px); max-width: 720px; }
-  .section-head p  { color: #7B36C7; font-size: 17px; max-width: 380px; }
+  .section-head p  { color: var(--color-plum); font-size: var(--text-md); max-width: 380px; }
 
-  .feed-tabs { display: flex; gap: 10px; margin-bottom: 22px; align-items: center; }
+  .feed-tabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-5-5); align-items: center; }
   .feed-tabs button {
-    background: #fff; border: 2px solid #4A1F8C; color: #4A1F8C;
-    padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: 14px;
-    transition: .2s; display: flex; align-items: center; gap: 8px; cursor: pointer;
+    background: var(--color-white); border: var(--border-base) solid var(--color-grape); color: var(--color-grape);
+    padding: var(--space-2) var(--space-4-5); border-radius: var(--radius-pill); font-weight: 700; font-size: var(--text-tag);
+    transition: var(--duration-base); display: flex; align-items: center; gap: var(--space-2); cursor: pointer;
   }
-  .feed-tabs button.active { background: #4A1F8C; color: #F5CF3E; }
-  .feed-tabs button:hover:not(.active) { background: #EFD9FF; }
-  .view-all { margin-left: auto; color: #7B36C7; font-weight: 600; font-size: 14px; text-decoration: none; }
-  .view-all:hover { color: #EC3B8E; }
+  .feed-tabs button.active { background: var(--color-grape); color: var(--color-lemon); }
+  .feed-tabs button:hover:not(.active) { background: var(--color-lavender); }
+  .view-all { margin-left: auto; color: var(--color-plum); font-weight: 600; font-size: var(--text-tag); text-decoration: none; }
+  .view-all:hover { color: var(--color-pink); }
 
   .feed-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-    border: 2.5px solid #4A1F8C; border-radius: 24px; padding: 8px; background: #fff;
-    box-shadow: 6px 6px 0 #4A1F8C;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2);
+    border: var(--border-thick) solid var(--color-grape); border-radius: var(--radius-card); padding: var(--space-2); background: var(--color-white);
+    box-shadow: var(--shadow-card);
   }
-  @media (max-width: 980px) { .feed-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 560px) { .feed-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 1024px) { .feed-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 680px) { .feed-grid { grid-template-columns: repeat(2, 1fr); } }
 
   .post {
-    aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; position: relative;
-    background: #EFD9FF; cursor: pointer; display: flex; align-items: flex-end; transition: .25s;
+    aspect-ratio: 1/1; border-radius: var(--radius-inner); overflow: hidden; position: relative;
+    background: var(--color-lavender); cursor: pointer; display: flex; align-items: flex-end; transition: var(--duration-medium);
   }
   .post:hover { transform: scale(.97); }
   .post::before { content: ""; position: absolute; pointer-events: none; }
 
   .ph {
     position: absolute; inset: 0; display: grid; place-items: center;
-    color: #fff; font-family: "DM Mono", "Courier New", monospace;
-    font-size: 10px; letter-spacing: .08em; text-align: center; padding: 10px; line-height: 1.35;
+    color: var(--color-white); font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: .08em; text-align: center; padding: var(--space-2); line-height: 1.35;
     z-index: 2;
   }
   .overlay {
-    position: relative; width: 100%; padding: 12px; z-index: 2;
+    position: relative; width: 100%; padding: var(--space-3); z-index: 2;
     background: linear-gradient(180deg, transparent, rgba(46,15,92,.85));
-    color: #fff; font-size: 11px; display: flex; justify-content: space-between; align-items: center;
-    opacity: 0; transition: .25s;
+    color: var(--color-white); font-size: var(--text-2xs); display: flex; justify-content: space-between; align-items: center;
+    opacity: 0; transition: var(--duration-medium);
   }
   .post:hover .overlay { opacity: 1; }
-  .ic { display: flex; align-items: center; gap: 4px; }
+  .ic { display: flex; align-items: center; gap: var(--space-1); }
   .post.video::after {
-    content: "▶"; position: absolute; top: 10px; right: 10px; color: #fff; font-size: 14px;
-    background: rgba(0,0,0,.4); width: 24px; height: 24px; border-radius: 50%;
+    content: "▶"; position: absolute; top: var(--space-2); right: var(--space-2); color: var(--color-white); font-size: var(--text-tag);
+    background: rgba(0,0,0,.4); width: 24px; height: 24px; border-radius: var(--radius-circle);
     display: grid; place-items: center; z-index: 3;
   }
 
   /* Post colour tiles */
-  .post-grad-1 { background: #3a1a6a; }
-  .post-grad-1::before { top: 14%; right: 14%; width: 36%; aspect-ratio: 1; background: #F5CF3E; border-radius: 50%; }
-  .post-grad-2 { background: #F37A2B; }
-  .post-grad-2::before { left: -15%; bottom: -20%; width: 90%; aspect-ratio: 1; background: #EC3B8E; border-radius: 55% 45% 60% 40%/45% 55% 45% 55%; }
-  .post-grad-3 { background: #6CD7C2; }
-  .post-grad-3::before { right: -20%; top: -15%; width: 75%; aspect-ratio: 1; background: #4A1F8C; border-radius: 60% 40% 55% 45%/50% 55% 45% 50%; }
-  .post-grad-4 { background: #EC3B8E; }
-  .post-grad-4::before { left: 50%; top: 50%; transform: translate(-50%,-50%); width: 60%; aspect-ratio: 1; background: #F5CF3E; border-radius: 48% 52% 65% 35%/55% 45% 55% 45%; }
-  .post-grad-5 { background: #4A1F8C; }
-  .post-grad-5::before { left: -10%; bottom: -15%; width: 80%; aspect-ratio: 1; background: #F37A2B; border-radius: 55% 45% 40% 60%/45% 60% 40% 55%; }
-  .post-grad-6 { background: #2E0F5C; }
-  .post-grad-6::before { right: -10%; top: 50%; transform: translateY(-50%); width: 80%; aspect-ratio: 1; background: #6CD7C2; border-radius: 60% 40% 55% 45%/45% 55% 45% 55%; }
-  .post-grad-7 { background: #F5CF3E; }
-  .post-grad-7::before { left: 50%; top: -25%; transform: translateX(-50%); width: 90%; aspect-ratio: 1; background: #EC3B8E; border-radius: 50%; }
+  .post-grad-1 { background: var(--color-grape-deep); }
+  .post-grad-1::before { top: 14%; right: 14%; width: 36%; aspect-ratio: 1; background: var(--color-lemon); border-radius: var(--radius-circle); }
+  .post-grad-2 { background: var(--color-orange); }
+  .post-grad-2::before { left: -15%; bottom: -20%; width: 90%; aspect-ratio: 1; background: var(--color-pink); border-radius: 55% 45% 60% 40%/45% 55% 45% 55%; }
+  .post-grad-3 { background: var(--color-mint); }
+  .post-grad-3::before { right: -20%; top: -15%; width: 75%; aspect-ratio: 1; background: var(--color-grape); border-radius: 60% 40% 55% 45%/50% 55% 45% 50%; }
+  .post-grad-4 { background: var(--color-pink); }
+  .post-grad-4::before { left: 50%; top: 50%; transform: translate(-50%,-50%); width: 60%; aspect-ratio: 1; background: var(--color-lemon); border-radius: 48% 52% 65% 35%/55% 45% 55% 45%; }
+  .post-grad-5 { background: var(--color-grape); }
+  .post-grad-5::before { left: -10%; bottom: -15%; width: 80%; aspect-ratio: 1; background: var(--color-orange); border-radius: 55% 45% 40% 60%/45% 60% 40% 55%; }
+  .post-grad-6 { background: var(--color-grape-deep); }
+  .post-grad-6::before { right: -10%; top: 50%; transform: translateY(-50%); width: 80%; aspect-ratio: 1; background: var(--color-mint); border-radius: 60% 40% 55% 45%/45% 55% 45% 55%; }
+  .post-grad-7 { background: var(--color-lemon); }
+  .post-grad-7::before { left: 50%; top: -25%; transform: translateX(-50%); width: 90%; aspect-ratio: 1; background: var(--color-pink); border-radius: var(--radius-circle); }
   .post-grad-8 { background: #FFD4DD; }
-  .post-grad-8::before { right: -20%; bottom: -25%; width: 90%; aspect-ratio: 1; background: #F37A2B; border-radius: 55% 45% 60% 40%/40% 60% 40% 60%; }
+  .post-grad-8::before { right: -20%; bottom: -25%; width: 90%; aspect-ratio: 1; background: var(--color-orange); border-radius: 55% 45% 60% 40%/40% 60% 40% 60%; }
 
   /* Feed tab toggling via body class */
   .post.fb-post { display: none; }

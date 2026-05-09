@@ -1,10 +1,14 @@
 ---
 import Button from '../ui/Button.astro';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const logoSvg = readFileSync(join(process.cwd(), 'public/assets/seekie-studios-logo.svg'), 'utf-8');
 ---
 <nav class="top">
   <div class="wrap row">
     <a href="/" class="brand">
-      <img src="/assets/logo-pink.jpg" alt="Seekie Studios logo" width="54" height="54" />
+      <div class="brand-logo" set:html={logoSvg}></div>
       <div>
         <div class="bn">Seekie Studios</div>
         <div class="bs">Paint · Sip · Geelong</div>
@@ -28,28 +32,35 @@ import Button from '../ui/Button.astro';
     position: sticky; top: 0; z-index: 50;
     backdrop-filter: blur(8px);
     background: rgba(239,217,255,.78);
-    border-bottom: 2px solid #4A1F8C;
+    border-bottom: var(--border-base) solid var(--color-grape);
   }
   .row {
-    display: flex; align-items: center; justify-content: space-between; gap: 24px;
-    padding: 14px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-6);
+    padding: var(--space-3-5);
   }
   .brand {
-    display: flex; align-items: center; gap: 12px; text-decoration: none;
+    display: flex; align-items: center; gap: var(--space-3); text-decoration: none;
   }
-  .brand img {
-    width: 54px; height: 54px; border-radius: 50%;
-    border: 2px solid #4A1F8C; background: #FFD4DD; object-fit: cover;
+  .brand-logo {
+    width: 54px; height: 54px; border-radius: var(--radius-circle);
+    border: var(--border-base) solid var(--color-grape); background: #FFD4DD;
+    overflow: hidden; flex: none; display: grid; place-items: center;
   }
-  .bn { font-family: "Bagel Fat One", serif; font-size: 22px; color: #4A1F8C; line-height: 1; }
-  .bs { font-family: "DM Sans", sans-serif; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #7B36C7; margin-top: 4px; }
+  .brand-logo svg { width: 100%; height: 100%; display: block; }
+  .bn { font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-grape); line-height: var(--leading-tight); }
+  .bs { font-family: var(--font-body); font-size: var(--text-2xs); letter-spacing: var(--tracking-sub); text-transform: uppercase; color: var(--color-plum); margin-top: var(--space-1); }
 
-  ul { display: flex; gap: 28px; list-style: none; }
+  ul { display: flex; gap: var(--space-7); list-style: none; }
   ul a {
-    text-decoration: none; font-weight: 600; font-size: 15px; color: #4A1F8C;
-    padding: 6px 2px; border-bottom: 2px solid transparent; transition: .2s;
+    text-decoration: none; font-weight: 600; font-size: var(--text-body); color: var(--color-grape);
+    padding: 6px 2px; border-bottom: var(--border-base) solid transparent; transition: var(--duration-base);
   }
-  ul a:hover { border-color: #EC3B8E; }
+  ul a:hover { border-color: var(--color-pink); }
 
-  @media (max-width: 820px) { ul { display: none; } }
+  @media (max-width: 1024px) { ul { display: none; } }
+  @media (max-width: 680px) {
+    .bs { display: none; }
+    .brand-logo { width: 40px; height: 40px; }
+    .bn { font-size: var(--text-lg); }
+  }
 </style>

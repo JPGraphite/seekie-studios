@@ -19,10 +19,10 @@ for (const event of events) {
 
 // Cover blob patterns keyed by coverVariant
 const coverStyles: Record<string, string> = {
-  'grape-moon':  'background:#3a1a6a',
-  'orange-blobs': 'background:#F37A2B',
-  'grape-mint':  'background:#4A1F8C',
-  'default':     'background:#4A1F8C',
+  'grape-moon':  'background:var(--color-grape-deep)',
+  'orange-blobs': 'background:var(--color-orange)',
+  'grape-mint':  'background:var(--color-grape)',
+  'default':     'background:var(--color-grape)',
 };
 ---
 <section class="events" id="events">
@@ -44,7 +44,7 @@ const coverStyles: Record<string, string> = {
           <article class={`event event-${i + 1} reveal${delay}`}>
             <div class="cover" style={coverImages[event.id] ? '' : (coverStyles[d.coverVariant] ?? coverStyles.default)}>
               {coverImages[event.id]
-                ? <Image src={coverImages[event.id]} alt={d.title} class="cover-img" widths={[400, 600]} sizes="(max-width: 680px) 100vw, (max-width: 980px) 50vw, 33vw" />
+                ? <Image src={coverImages[event.id]} alt={d.title} class="cover-img" widths={[400, 600]} sizes="(max-width: 680px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                 : <>
                     <div class={`blob-shape variant-${d.coverVariant}`} aria-hidden="true"></div>
                     <div class="ph">[ event photo ]</div>
@@ -97,87 +97,87 @@ const coverStyles: Record<string, string> = {
 </section>
 
 <style>
-  .events { background: #EFD9FF; position: relative; padding: 110px 0; z-index: 2; }
+  .events { background: var(--color-lavender); position: relative; padding: var(--section-pad) 0; z-index: 2; }
 
-  .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  @media (max-width: 980px) { .event-grid { grid-template-columns: 1fr 1fr; } }
+  .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5-5); }
+  @media (max-width: 1024px) { .event-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 680px) { .event-grid { grid-template-columns: 1fr; } }
 
   .event {
-    position: relative; background: #fff; border: 2.5px solid #4A1F8C; border-radius: 24px;
+    position: relative; background: var(--color-white); border: var(--border-thick) solid var(--color-grape); border-radius: var(--radius-card);
     overflow: hidden; display: flex; flex-direction: column;
-    box-shadow: 6px 6px 0 #4A1F8C; transition: .3s;
+    box-shadow: var(--shadow-card); transition: var(--duration-slow);
   }
-  .event:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 #4A1F8C; }
+  .event:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-card-hover); }
 
   .cover {
     aspect-ratio: 5/4; position: relative; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
-    border-bottom: 2.5px solid #4A1F8C;
+    border-bottom: var(--border-thick) solid var(--color-grape);
   }
 
   /* Blob patterns per cover variant */
   .blob-shape { position: absolute; pointer-events: none; }
   .variant-grape-moon {
     top: 8%; right: 10%; width: 46%; aspect-ratio: 1;
-    background: #F5CF3E; border-radius: 50%; box-shadow: -30px 30px 0 -10px #F5CF3E;
+    background: var(--color-lemon); border-radius: var(--radius-circle); box-shadow: -30px 30px 0 -10px var(--color-lemon);
   }
   .variant-orange-blobs {
     left: -10%; top: -10%; width: 80%; aspect-ratio: 1;
-    background: #EC3B8E; border-radius: 60% 40% 55% 45%/50% 55% 45% 50%;
+    background: var(--color-pink); border-radius: 60% 40% 55% 45%/50% 55% 45% 50%;
   }
   .variant-grape-mint {
     left: 50%; top: 50%; transform: translate(-50%,-50%); width: 78%; aspect-ratio: 1;
-    background: #6CD7C2; border-radius: 55% 45% 60% 40%/45% 55% 45% 55%;
+    background: var(--color-mint); border-radius: 55% 45% 60% 40%/45% 55% 45% 55%;
   }
   .variant-default {
     left: 50%; top: 50%; transform: translate(-50%,-50%); width: 60%; aspect-ratio: 1;
-    background: #EC3B8E; border-radius: 50%;
+    background: var(--color-pink); border-radius: var(--radius-circle);
   }
 
   .cover-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
   .pricetag {
-    position: absolute; top: 14px; right: 14px;
-    background: #F5CF3E; color: #4A1F8C;
-    border: 2.5px solid #4A1F8C; padding: 6px 14px; border-radius: 999px;
-    font-family: "Bagel Fat One", serif; font-size: 16px; z-index: 2;
+    position: absolute; top: var(--space-3-5); right: var(--space-3-5);
+    background: var(--color-lemon); color: var(--color-grape);
+    border: var(--border-thick) solid var(--color-grape); padding: var(--space-1) var(--space-3-5); border-radius: var(--radius-pill);
+    font-family: var(--font-display); font-size: 16px; z-index: 2;
   }
   .ph {
-    color: #fff; font-family: "DM Mono", "Courier New", monospace; font-size: 11px;
-    letter-spacing: .1em; text-align: center; padding: 16px; line-height: 1.4;
+    color: var(--color-white); font-family: var(--font-mono); font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-meta); text-align: center; padding: var(--space-4); line-height: var(--leading-compact);
     mix-blend-mode: plus-lighter; position: relative; z-index: 2;
   }
 
-  .body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .body { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); flex: 1; }
 
-  .when { display: flex; align-items: center; gap: 8px; color: #EC3B8E; font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
-  .when .dot { width: 8px; height: 8px; background: #EC3B8E; border-radius: 50%; flex: none; }
-  h3 { font-family: "Caprasimo", serif; font-size: 26px; color: #4A1F8C; line-height: 1.05; }
+  .when { display: flex; align-items: center; gap: var(--space-2); color: var(--color-pink); font-weight: 700; font-size: var(--text-sm); letter-spacing: var(--tracking-meta); text-transform: uppercase; }
+  .when .dot { width: 8px; height: 8px; background: var(--color-pink); border-radius: var(--radius-circle); flex: none; }
+  h3 { font-family: var(--font-groove); font-size: var(--text-2xl); color: var(--color-grape); line-height: var(--leading-tight); }
 
-  .meta { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: #3d2666; }
-  .meta span { display: flex; align-items: center; gap: 8px; }
+  .meta { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-tag); color: var(--color-text-muted); }
+  .meta span { display: flex; align-items: center; gap: var(--space-2); }
 
   .foot {
-    margin-top: auto; padding-top: 14px; border-top: 1.5px dashed #E1BFFF;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: auto; padding-top: var(--space-3-5); border-top: var(--border-fine) dashed var(--color-lavender-mid);
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
   }
-  .seats { font-size: 12px; color: #7B36C7; font-weight: 600; }
-  .seats b { color: #F37A2B; }
+  .seats { font-size: var(--text-xs); color: var(--color-plum); font-weight: 600; }
+  .seats b { color: var(--color-orange); }
 
   .ticket {
-    background: #4A1F8C; color: #F5CF3E; padding: 10px 14px; border-radius: 999px;
-    text-decoration: none; font-family: "Bagel Fat One", serif; font-size: 13px; letter-spacing: .04em;
+    background: var(--color-grape); color: var(--color-lemon); padding: var(--space-2) var(--space-3-5); border-radius: var(--radius-pill);
+    text-decoration: none; font-family: var(--font-display); font-size: var(--text-sm); letter-spacing: var(--tracking-normal);
   }
-  .ticket:hover   { background: #EC3B8E; color: #fff; }
-  .ticket.waitlist { background: #7B36C7; }
+  .ticket:hover   { background: var(--color-pink); color: var(--color-white); }
+  .ticket.waitlist { background: var(--color-plum); }
 
   .humanitix-note {
-    margin-top: 38px; display: flex; align-items: center; justify-content: center; gap: 14px;
-    color: #7B36C7; font-size: 14px; flex-wrap: wrap; text-align: center;
+    margin-top: var(--space-10); display: flex; align-items: center; justify-content: center; gap: var(--space-3-5);
+    color: var(--color-plum); font-size: var(--text-tag); flex-wrap: wrap; text-align: center;
   }
   .humanitix-note .pill {
-    background: #fff; border: 2px solid #4A1F8C; padding: 6px 14px; border-radius: 999px;
-    font-family: "Bagel Fat One", serif; color: #4A1F8C; font-size: 13px;
+    background: var(--color-white); border: var(--border-base) solid var(--color-grape); padding: var(--space-1) var(--space-3-5); border-radius: var(--radius-pill);
+    font-family: var(--font-display); color: var(--color-grape); font-size: var(--text-sm);
   }
 </style>

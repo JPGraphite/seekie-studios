@@ -29,13 +29,13 @@ const items = [
 
 <style>
   .ticker {
-    background: #4A1F8C; color: #F5CF3E;
-    border-top: 3px solid #2A0F4F; border-bottom: 3px solid #2A0F4F;
+    background: var(--color-grape); color: var(--color-lemon);
+    border-top: var(--border-rule) solid var(--color-ink); border-bottom: var(--border-rule) solid var(--color-ink);
     overflow: hidden;
-    font-family: "Bagel Fat One", serif; font-size: 28px; letter-spacing: .04em;
-    padding: 14px 0;
+    font-family: var(--font-display); font-size: var(--text-3xl); letter-spacing: var(--tracking-normal);
+    padding: var(--space-3-5) 0;
   }
-  .ticker-track { display: flex; gap: 48px; white-space: nowrap; }
-  .ticker-track span { display: inline-flex; align-items: center; gap: 48px; }
-  .star { color: #EC3B8E; font-size: 22px; }
+  .ticker-track { display: flex; gap: var(--space-12); white-space: nowrap; }
+  .ticker-track span { display: inline-flex; align-items: center; gap: var(--space-12); }
+  .star { color: var(--color-pink); font-size: var(--text-xl); }
 </style>
