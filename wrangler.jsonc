@@ -10,6 +10,12 @@
       "destination_address": "seekie.studios@gmail.com"
     }
   ],
+   "routes": [
+    {
+      "pattern": "seekiestudios.com.au",
+      "custom_domain": true
+    }
+  ],
   "vars": {
     "KEYSTATIC_GITHUB_CLIENT_ID": "Iv23liReUIzwQlGOZiLE",
     "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG": "seekie-studios"
