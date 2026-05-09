@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
-import { createMimeMessage } from 'mimetext';
+import { createMimeMessage, Mailbox } from 'mimetext';
 import { EmailMessage } from 'cloudflare:email';
 
 const REGION_LABELS: Record<string, string> = {
@@ -42,6 +42,22 @@ function clean(value: unknown, max: number): string {
     .slice(0, max);
 }
 
+// Strip everything that can't appear unescaped in an RFC 5322 display-name:
+// non-printable ASCII, accents/diacritics, and the "specials" set.
+// The original (international) name is preserved in the email body.
+function headerSafeName(value: string): string {
+  return value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^\x20-\x7E]/g, '')
+    .replace(/[()<>[\]:;@\\,"`]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 64);
+}
+
+const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 function formatDate(value: string): string {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
   if (!match) return value;
@@ -58,24 +74,62 @@ function isValidIsoDate(value: string): boolean {
   return !isNaN(date.getTime());
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function buildHtmlBody(opts: {
+  name: string;
+  groupSize: number;
+  email: string;
+  formattedDate: string;
+  regionLabel: string;
+  theme: string;
+  notes: string;
+  replyMailto: string;
+}): string {
+  const { name, groupSize, email, formattedDate, regionLabel, theme, notes, replyMailto } = opts;
+  const themeHtml = escapeHtml(theme || '(not provided)').replace(/\n/g, '<br>');
+  const notesHtml = escapeHtml(notes || '(not provided)').replace(/\n/g, '<br>');
+  const labelStyle = 'padding:4px 12px 4px 0;color:#555;white-space:nowrap;vertical-align:top;';
+  const valueStyle = 'padding:4px 0;color:#1a1a1a;vertical-align:top;';
+
+  return `<!DOCTYPE html>
+<html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1a1a1a;line-height:1.5;font-size:14px;">
+<p style="margin:0 0 16px;">New booking enquiry from Seekie Studios website</p>
+<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+  <tr><td style="${labelStyle}"><strong>Name</strong></td><td style="${valueStyle}">${escapeHtml(name)}</td></tr>
+  <tr><td style="${labelStyle}"><strong>Group size</strong></td><td style="${valueStyle}">${groupSize}</td></tr>
+  <tr><td style="${labelStyle}"><strong>Email</strong></td><td style="${valueStyle}"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
+  <tr><td style="${labelStyle}"><strong>Date</strong></td><td style="${valueStyle}">${escapeHtml(formattedDate)}</td></tr>
+  <tr><td style="${labelStyle}"><strong>Region</strong></td><td style="${valueStyle}">${escapeHtml(regionLabel)}</td></tr>
+  <tr><td style="${labelStyle}"><strong>Theme/vibe</strong></td><td style="${valueStyle}">${themeHtml}</td></tr>
+  <tr><td style="${labelStyle}"><strong>Notes</strong></td><td style="${valueStyle}">${notesHtml}</td></tr>
+</table>
+<p style="margin:20px 0 0;"><a href="${escapeHtml(replyMailto)}" style="display:inline-block;padding:8px 16px;background:#1a1a1a;color:#fff;text-decoration:none;border-radius:6px;">Reply to ${escapeHtml(name)}</a></p>
+</body></html>`;
+}
+
 async function verifyTurnstile(
   token: string,
   secret: string,
   ip: string,
-): Promise<{ success: boolean; errorCodes: string[] }> {
+): Promise<boolean> {
   try {
     const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ secret, response: token, remoteip: ip }),
     });
-    const data = (await res.json()) as { success?: boolean; 'error-codes'?: string[] };
-    return {
-      success: data.success === true,
-      errorCodes: data['error-codes'] ?? [],
-    };
-  } catch (err) {
-    return { success: false, errorCodes: [`fetch-failed:${String(err)}`] };
+    const data = (await res.json()) as { success?: boolean };
+    return data.success === true;
+  } catch {
+    return false;
   }
 }
 
@@ -130,15 +184,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
   if (turnstileSecret) {
     const token = String(body['cf-turnstile-response'] ?? '');
     if (!token) {
-      console.warn('[contact] Turnstile token missing from submission');
       return Response.json(
         { error: 'Please complete the verification challenge before submitting.' },
         { status: 400 },
       );
     }
-    const verdict = await verifyTurnstile(token, turnstileSecret, ip);
-    if (!verdict.success) {
-      console.warn('[contact] Turnstile verify failed', { errorCodes: verdict.errorCodes, ip });
+    if (!(await verifyTurnstile(token, turnstileSecret, ip))) {
       return Response.json(
         { error: 'Verification failed. Please refresh and try again.' },
         { status: 400 },
@@ -159,7 +210,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return Response.json({ error: 'Please fill in all required fields.' }, { status: 400 });
   }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!EMAIL_RE.test(email)) {
     return Response.json({ error: 'Invalid email address.' }, { status: 400 });
   }
 
@@ -177,7 +228,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   const formattedDate = formatDate(date);
-  const userAgent = request.headers.get('user-agent') ?? 'unknown';
 
   const replyMailto =
     `mailto:${email}` +
@@ -196,22 +246,41 @@ export const POST: APIRoute = async ({ request, locals }) => {
     `Notes:       ${notes || '(not provided)'}`,
     '',
     `Reply to ${name}: ${replyMailto}`,
-    '',
-    '- Submission metadata -',
-    `IP:          ${ip}`,
-    `User-Agent:  ${userAgent}`,
   ].join('\n');
+
+  const regionLabel = REGION_LABELS[region] ?? region;
+  const bodyHtml = buildHtmlBody({
+    name,
+    groupSize,
+    email,
+    formattedDate,
+    regionLabel,
+    theme,
+    notes,
+    replyMailto,
+  });
 
   try {
     const EMAIL = env.EMAIL as { send: (msg: unknown) => Promise<void> } | undefined;
 
     if (EMAIL) {
+      const safeName = headerSafeName(name);
+      const safeSubjectName = safeName || 'a guest';
+
+      // mimetext bug: setRecipient(..., {type:'Reply-To'}) sets a Mailbox[]
+      // but the Reply-To validator requires a single Mailbox. Construct it
+      // ourselves and pass directly to setHeader.
+      const replyToMailbox = safeName
+        ? new Mailbox({ name: safeName, addr: email })
+        : new Mailbox(email);
+
       const msg = createMimeMessage();
       msg.setSender({ name: 'Seekie Studios Bookings', addr: 'bookings@seekiestudios.com.au' });
       msg.setRecipient('seekie.studios@gmail.com');
-      msg.setRecipient({ name, addr: email }, { type: 'Reply-To' });
-      msg.setSubject(`Enquiry - ${name} wants in on a paint date (${formattedDate}) ✿`);
+      msg.setHeader('Reply-To', replyToMailbox);
+      msg.setSubject(`Enquiry - ${safeSubjectName} wants in on a paint date (${formattedDate}) ✿`);
       msg.addMessage({ contentType: 'text/plain', data: bodyText });
+      msg.addMessage({ contentType: 'text/html', data: bodyHtml });
 
       const message = new EmailMessage(
         'bookings@seekiestudios.com.au',
