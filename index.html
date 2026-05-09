@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Seekie Studios — Paint & Sip Parties · Geelong / Surf Coast / Bellarine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Caprasimo&family=DM+Sans:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap">
+<style>
+  :root{
+    --grape:#4A1F8C;
+    --grape-deep:#2E0F5C;
+    --plum:#7B36C7;
+    --lavender:#EFD9FF;
+    --lavender-mid:#E1BFFF;
+    --cream:#FFF6E8;
+    --pink:#EC3B8E;
+    --orange:#F37A2B;
+    --lemon:#F5CF3E;
+    --mint:#6CD7C2;
+    --ink:#2A0F4F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"DM Sans",system-ui,sans-serif;
+    background:var(--lavender);
+    color:var(--ink);
+    overflow-x:hidden;
+    line-height:1.55;
+  }
+  /* paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:radial-gradient(rgba(74,31,140,.07) 1px,transparent 1px),radial-gradient(rgba(243,122,43,.05) 1px,transparent 1px);
+    background-size:3px 3px,7px 7px;
+    background-position:0 0,1px 2px;
+    mix-blend-mode:multiply;opacity:.55;
+  }
+
+  h1,h2,h3,.display{font-family:"Bagel Fat One","Caprasimo",serif;font-weight:400;letter-spacing:.01em;line-height:.95;color:var(--grape)}
+  .groove{font-family:"Caprasimo",serif;font-weight:400;letter-spacing:.01em}
+  .hand{font-family:"Caveat",cursive;font-weight:700}
+
+  a{color:inherit}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+
+  /* ---------- NAV ---------- */
+  nav.top{
+    position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);
+    background:rgba(239,217,255,.78);
+    border-bottom:2px solid var(--grape);
+  }
+  nav.top .row{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    padding:14px 0;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand img{width:54px;height:54px;border-radius:50%;border:2px solid var(--grape);background:#FFD4DD;object-fit:cover}
+  .brand .bn{font-family:"Bagel Fat One",serif;font-size:22px;color:var(--grape);line-height:1}
+  .brand .bs{font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--plum);margin-top:4px}
+  nav.top ul{display:flex;gap:28px;list-style:none}
+  nav.top ul a{
+    text-decoration:none;font-weight:600;font-size:15px;color:var(--grape);
+    padding:6px 2px;border-bottom:2px solid transparent;transition:.2s;
+  }
+  nav.top ul a:hover{border-color:var(--pink)}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--grape);color:var(--lemon);
+    padding:11px 18px;border-radius:999px;
+    font-family:"Bagel Fat One",serif;font-size:15px;letter-spacing:.04em;
+    text-decoration:none;transition:.2s;
+    box-shadow:3px 3px 0 var(--pink);
+  }
+  .nav-cta:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--pink)}
+  @media (max-width:820px){nav.top ul{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;padding:90px 0 140px;
+    background:var(--lavender);
+    overflow:hidden;
+  }
+  /* organic bold shapes behind hero */
+  .hero-blob{position:absolute;pointer-events:none;z-index:0}
+  .hero-blob.b1{top:-90px;right:-60px;width:360px;height:360px;background:var(--lemon);border-radius:62% 38% 55% 45%/45% 60% 40% 55%;transform:rotate(8deg)}
+  .hero-blob.b2{bottom:-100px;left:-80px;width:320px;height:320px;background:var(--mint);border-radius:55% 45% 38% 62%/60% 45% 55% 40%;transform:rotate(-12deg)}
+  .hero-blob.b3{top:40%;right:38%;width:120px;height:120px;background:var(--pink);border-radius:48% 52% 65% 35%/55% 45% 55% 45%;opacity:.55;transform:rotate(20deg)}
+  .hero .wrap{position:relative;z-index:3}
+  .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  @media (max-width:880px){.hero .grid{grid-template-columns:1fr;gap:32px}.hero{padding:48px 0 90px}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--grape);color:var(--cream);
+    padding:8px 16px;border-radius:999px;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+    transform:rotate(-1.5deg);
+  }
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--lemon)}
+
+  h1.hero-title{
+    font-size:clamp(56px,9.5vw,140px);
+    margin:24px 0 20px;
+    color:var(--grape-deep);
+  }
+  h1.hero-title .gw{color:var(--pink)}
+  h1.hero-title .amp{
+    display:inline-block;color:var(--orange);transform:rotate(-8deg) translateY(6px);
+    font-family:"Caprasimo",serif;
+  }
+  h1.hero-title em{font-style:normal;color:var(--plum);position:relative;display:inline-block}
+  h1.hero-title em::after{
+    content:"";position:absolute;left:-4%;right:-4%;bottom:6%;height:18%;
+    background:var(--lemon);border-radius:50%/40%;z-index:-1;transform:rotate(-1deg);
+  }
+  .hero p.lede{
+    font-size:20px;max-width:540px;color:var(--ink);
+    margin-bottom:32px;
+  }
+  .hero .ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 22px;border-radius:999px;
+    font-family:"Bagel Fat One",serif;letter-spacing:.04em;font-size:16px;
+    text-decoration:none;transition:.2s;
+  }
+  .btn-primary{background:var(--pink);color:#fff;box-shadow:4px 4px 0 var(--grape)}
+  .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--grape)}
+  .btn-secondary{background:transparent;color:var(--grape);border:2.5px solid var(--grape)}
+  .btn-secondary:hover{background:var(--grape);color:var(--lemon)}
+  .btn .arr{transition:.2s}
+  .btn:hover .arr{transform:translateX(4px)}
+
+  .hero-stats{display:flex;gap:28px;margin-top:42px;flex-wrap:wrap}
+  .hero-stats .s{display:flex;align-items:baseline;gap:10px}
+  .hero-stats .num{font-family:"Bagel Fat One",serif;font-size:34px;color:var(--orange);line-height:1}
+  .hero-stats .lab{font-size:13px;color:var(--grape);font-weight:600;max-width:120px;line-height:1.25}
+
+  /* polaroid stage */
+  .stage{
+    position:relative;height:560px;
+  }
+  @media (max-width:880px){.stage{height:460px}}
+  .polaroid{
+    position:absolute;background:#fff;padding:14px 14px 56px;
+    box-shadow:0 18px 36px -10px rgba(74,31,140,.35),0 4px 12px rgba(74,31,140,.15);
+    border-radius:2px;
+    transition:transform .4s cubic-bezier(.2,.9,.3,1.3);
+  }
+  .polaroid .img{
+    width:100%;aspect-ratio:3/4;background:var(--lavender-mid);border-radius:1px;
+    display:flex;align-items:center;justify-content:center;
+    background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.18) 0 6px,transparent 6px 12px);
+    background-color:var(--plum);color:#fff;
+    font-family:"DM Mono","Courier New",monospace;font-size:12px;letter-spacing:.08em;
+    text-align:center;padding:12px;line-height:1.4;
+  }
+  .polaroid .cap{
+    font-family:"Caveat",cursive;font-size:22px;color:var(--grape);
+    text-align:center;margin-top:10px;line-height:1;
+  }
+  .polaroid:hover{transform:scale(1.04) rotate(0deg) !important;z-index:5}
+
+  .p1{top:30px;left:0;width:240px;transform:rotate(-7deg);background:#fff}
+  .p2{top:80px;left:200px;width:280px;transform:rotate(4deg);z-index:2}
+  .p3{top:240px;left:60px;width:230px;transform:rotate(-3deg);z-index:3}
+  .p4{top:300px;left:280px;width:220px;transform:rotate(8deg);z-index:1}
+  .p2 .img{background:#3a1a6a;position:relative;overflow:hidden}
+  .p2 .img::before{content:"";position:absolute;top:14%;right:18%;width:30%;aspect-ratio:1;background:var(--lemon);border-radius:50%}
+  .p2 .img::after{content:"🐈‍⬛";font-size:88px;filter:saturate(0);position:relative;z-index:2}
+  .p1 .img{background-color:#EC3B8E}
+  .p3 .img{background-color:#F37A2B}
+  .p4 .img{background-color:#6CD7C2}
+
+  /* hero rainbow squiggle — wide ribbons that enter/exit off-screen cleanly */
+  .hero-squiggle{
+    position:absolute;left:-10vw;right:-10vw;top:30px;
+    width:120vw;height:200px;
+    pointer-events:none;z-index:1;
+  }
+  .hero-squiggle-2{
+    position:absolute;left:-10vw;right:-10vw;bottom:0;
+    width:120vw;height:220px;
+    pointer-events:none;z-index:1;
+  }
+
+  /* sticker blobs */
+  .blob{position:absolute;border-radius:48% 52% 60% 40%/55% 45% 55% 45%;}
+
+  /* ---------- TICKER ---------- */
+  .ticker{
+    background:var(--grape);color:var(--lemon);
+    border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
+    overflow:hidden;
+    font-family:"Bagel Fat One",serif;font-size:28px;letter-spacing:.04em;
+    padding:14px 0;
+  }
+  .ticker-track{display:flex;gap:48px;white-space:nowrap;animation:scroll 40s linear infinite}
+  .ticker-track span{display:inline-flex;align-items:center;gap:48px}
+  .ticker .star{color:var(--pink);font-size:22px}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{position:relative;padding:110px 0;z-index:2}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:56px;flex-wrap:wrap}
+  .section-head h2{font-size:clamp(44px,6vw,80px);max-width:720px}
+  .section-head p{color:var(--plum);font-size:17px;max-width:380px}
+  .section-tag{
+    display:inline-block;font-family:"Caprasimo",serif;font-size:14px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--pink);margin-bottom:14px;
+  }
+  .section-tag::before{content:"❋ "}
+  .section-tag::after{content:" ❋"}
+
+  /* ---------- WHAT WE DO ---------- */
+  .what{background:var(--cream)}
+  .what::before,.what::after{content:"";position:absolute;left:0;right:0;height:40px;background:var(--cream)}
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media (max-width:880px){.feature-grid{grid-template-columns:1fr}}
+  .feature{
+    position:relative;background:#fff;border:2.5px solid var(--grape);
+    border-radius:24px;padding:32px 28px;
+    box-shadow:6px 6px 0 var(--grape);
+    transition:.3s;
+  }
+  .feature:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--grape)}
+  .feature .icon-circle{
+    width:64px;height:64px;border-radius:50%;display:grid;place-items:center;
+    margin-bottom:20px;border:2.5px solid var(--grape);
+  }
+  .feature:nth-child(1) .icon-circle{background:var(--pink)}
+  .feature:nth-child(2) .icon-circle{background:var(--orange)}
+  .feature:nth-child(3) .icon-circle{background:var(--mint)}
+  .feature h3{font-family:"Caprasimo",serif;font-size:26px;color:var(--grape);margin-bottom:10px}
+  .feature p{color:#3d2666;font-size:15px;line-height:1.55}
+  .feature .num{
+    position:absolute;top:-18px;right:18px;width:46px;height:46px;border-radius:50%;
+    background:var(--lemon);color:var(--grape);display:grid;place-items:center;
+    font-family:"Bagel Fat One",serif;font-size:18px;border:2.5px solid var(--grape);
+  }
+
+  .what-rows{margin-top:64px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media (max-width:880px){.what-rows{grid-template-columns:1fr}}
+  .what-rows ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .what-rows li{
+    display:flex;align-items:flex-start;gap:14px;font-size:17px;color:var(--ink);
+    padding:14px 18px;background:var(--lavender);border-radius:14px;
+  }
+  .what-rows li .check{
+    flex:none;width:26px;height:26px;border-radius:50%;background:var(--grape);color:var(--lemon);
+    display:grid;place-items:center;font-family:"Bagel Fat One",serif;font-size:14px;
+  }
+  .what-img{
+    aspect-ratio:4/5;border-radius:24px;border:3px solid var(--grape);
+    background:var(--orange);
+    position:relative;display:grid;place-items:center;color:var(--cream);
+    font-family:"DM Mono","Courier New",monospace;font-size:13px;letter-spacing:.08em;text-align:center;padding:24px;
+    box-shadow:8px 8px 0 var(--grape);overflow:hidden;
+  }
+  .what-img::before{
+    content:"";position:absolute;left:-15%;bottom:-20%;width:80%;aspect-ratio:1;
+    background:var(--pink);border-radius:55% 45% 60% 40%/40% 60% 40% 60%;
+  }
+  .what-img > *{position:relative;z-index:2}
+  .what-img::after{
+    content:"📷  PHOTO\AGroup mid-paint, easels up,\Adrinks in hand";white-space:pre;
+  }
+  .sticker{
+    position:absolute;font-family:"Bagel Fat One",serif;color:var(--grape);
+    background:var(--lemon);border:2.5px solid var(--grape);
+    padding:14px 18px;border-radius:50%;
+    transform:rotate(-8deg);box-shadow:3px 3px 0 var(--grape);
+    font-size:18px;line-height:1;text-align:center;
+  }
+  .what-img .sticker{top:-22px;right:-22px;width:120px;height:120px;display:grid;place-items:center}
+
+  /* ---------- EVENTS ---------- */
+  .events{
+    background:var(--lavender);
+  }
+  .event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width:980px){.event-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:680px){.event-grid{grid-template-columns:1fr}}
+  .event{
+    position:relative;background:#fff;border:2.5px solid var(--grape);border-radius:24px;
+    overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:6px 6px 0 var(--grape);transition:.3s;
+  }
+  .event:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--grape)}
+  .event .cover{
+    aspect-ratio:5/4;position:relative;
+    display:flex;align-items:center;justify-content:center;
+    background-size:cover;background-position:center;
+    border-bottom:2.5px solid var(--grape);
+  }
+  .event .cover .ph{
+    color:#fff;font-family:"DM Mono","Courier New",monospace;font-size:11px;
+    letter-spacing:.1em;text-align:center;padding:16px;line-height:1.4;mix-blend-mode:plus-lighter;
+  }
+  .event .cover{overflow:hidden}
+  .event .cover .blob-shape{position:absolute;pointer-events:none}
+  .event-1 .cover{background:#3a1a6a}
+  .event-1 .cover .blob-shape{top:8%;right:10%;width:46%;aspect-ratio:1;background:var(--lemon);border-radius:50%;box-shadow:-30px 30px 0 -10px var(--lemon)}
+  .event-2 .cover{background:var(--orange)}
+  .event-2 .cover .blob-shape{left:-10%;top:-10%;width:80%;aspect-ratio:1;background:var(--pink);border-radius:60% 40% 55% 45%/50% 55% 45% 50%}
+  .event-2 .cover .blob-shape.b2{left:auto;right:-15%;top:auto;bottom:-20%;width:70%;background:var(--lemon);border-radius:55% 45% 40% 60%/45% 60% 40% 55%}
+  .event-3 .cover{background:var(--grape)}
+  .event-3 .cover .blob-shape{left:50%;top:50%;transform:translate(-50%,-50%);width:78%;aspect-ratio:1;background:var(--mint);border-radius:55% 45% 60% 40%/45% 55% 45% 55%}
+  .event-3 .cover .blob-shape.b2{transform:translate(-30%,-60%);width:42%;background:var(--pink);border-radius:48% 52% 60% 40%/55% 45% 55% 45%}
+  .event .pricetag{
+    position:absolute;top:14px;right:14px;background:var(--lemon);color:var(--grape);
+    border:2.5px solid var(--grape);padding:6px 14px;border-radius:999px;
+    font-family:"Bagel Fat One",serif;font-size:16px;
+  }
+  .event .body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .event .when{
+    display:flex;align-items:center;gap:8px;color:var(--pink);
+    font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  }
+  .event .when .dot{width:8px;height:8px;background:var(--pink);border-radius:50%}
+  .event h3{font-family:"Caprasimo",serif;font-size:26px;color:var(--grape);line-height:1.05}
+  .event .meta{display:flex;flex-direction:column;gap:6px;font-size:14px;color:#3d2666}
+  .event .meta span{display:flex;align-items:center;gap:8px}
+  .event .meta svg{flex:none}
+  .event .foot{
+    margin-top:auto;padding-top:14px;border-top:1.5px dashed var(--lavender-mid);
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .event .foot .seats{font-size:12px;color:var(--plum);font-weight:600}
+  .event .foot .seats b{color:var(--orange)}
+  .event .foot a{
+    background:var(--grape);color:var(--lemon);padding:10px 14px;border-radius:999px;
+    text-decoration:none;font-family:"Bagel Fat One",serif;font-size:13px;letter-spacing:.04em;
+  }
+  .event .foot a:hover{background:var(--pink);color:#fff}
+
+  .humanitix-note{
+    margin-top:38px;display:flex;align-items:center;justify-content:center;gap:14px;
+    color:var(--plum);font-size:14px;flex-wrap:wrap;text-align:center;
+  }
+  .humanitix-note .pill{
+    background:#fff;border:2px solid var(--grape);padding:6px 14px;border-radius:999px;
+    font-family:"Bagel Fat One",serif;color:var(--grape);font-size:13px;
+  }
+
+  /* ---------- ASTRAY PARTNERSHIP ---------- */
+  .astray{
+    background:var(--grape);color:var(--cream);
+    overflow:hidden;
+  }
+  .astray h2{color:var(--lemon)}
+  .astray .section-tag{color:var(--mint)}
+  .astray .grid2{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  @media (max-width:880px){.astray .grid2{grid-template-columns:1fr}}
+  .astray .lede2{font-size:19px;color:#F8E8FF;max-width:520px;line-height:1.55;margin-bottom:24px}
+  .astray .perks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0 32px}
+  .perk{
+    background:rgba(255,255,255,.06);border:1.5px solid rgba(245,207,62,.3);
+    border-radius:16px;padding:16px 18px;
+  }
+  .perk h4{font-family:"Caprasimo",serif;font-size:18px;color:var(--lemon);margin-bottom:4px}
+  .perk p{font-size:14px;color:#F8E8FF;line-height:1.4}
+
+  .astray-card{
+    position:relative;aspect-ratio:4/5;
+    background:var(--grape-deep);
+    border:3px solid var(--lemon);border-radius:24px;
+    padding:28px;display:flex;flex-direction:column;justify-content:flex-end;
+    box-shadow:0 24px 60px -10px rgba(0,0,0,.45);
+    overflow:hidden;
+  }
+  .astray-card::before{
+    content:"";position:absolute;top:-12%;right:-15%;width:65%;aspect-ratio:1;
+    background:var(--pink);border-radius:55% 45% 60% 40%/45% 55% 45% 55%;
+  }
+  .astray-card::after{
+    content:"";position:absolute;left:-10%;bottom:-15%;width:55%;aspect-ratio:1;
+    background:var(--lemon);border-radius:50%;
+  }
+  .astray-card .label{
+    position:relative;display:inline-block;align-self:flex-start;margin-bottom:auto;
+    background:var(--lemon);color:var(--grape);
+    padding:8px 14px;border-radius:999px;
+    font-family:"Bagel Fat One",serif;font-size:14px;letter-spacing:.06em;
+  }
+  .astray-card h3{
+    position:relative;font-family:"Bagel Fat One",serif;font-size:48px;color:var(--cream);line-height:.95;margin-bottom:14px;
+  }
+  .astray-card h3 span{color:var(--lemon)}
+  .astray-card .meta{position:relative;display:flex;gap:18px;flex-wrap:wrap;color:#F8E8FF;font-size:14px}
+  .astray-card .meta b{color:var(--lemon)}
+  .menu-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:14px 0}
+  .menu-list li{display:flex;align-items:center;gap:10px;color:#F8E8FF;font-size:15px}
+  .menu-list li::before{
+    content:"";flex:none;width:20px;height:1.5px;background:var(--lemon);
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery{background:var(--cream)}
+  .feed-tabs{display:flex;gap:10px;margin-bottom:22px}
+  .feed-tabs button{
+    background:#fff;border:2px solid var(--grape);color:var(--grape);
+    padding:8px 18px;border-radius:999px;font-weight:700;font-size:14px;
+    transition:.2s;display:flex;align-items:center;gap:8px;
+  }
+  .feed-tabs button.active{background:var(--grape);color:var(--lemon)}
+  .feed-tabs button:hover:not(.active){background:var(--lavender)}
+  .feed-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+    border:2.5px solid var(--grape);border-radius:24px;padding:8px;background:#fff;
+    box-shadow:6px 6px 0 var(--grape);
+  }
+  @media (max-width:980px){.feed-grid{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:560px){.feed-grid{grid-template-columns:repeat(2,1fr)}}
+  .post{
+    aspect-ratio:1/1;border-radius:14px;overflow:hidden;position:relative;
+    background:var(--lavender);cursor:pointer;
+    display:flex;align-items:flex-end;
+    transition:.25s;
+  }
+  .post:hover{transform:scale(.97)}
+  .post .ph{
+    position:absolute;inset:0;display:grid;place-items:center;
+    color:#fff;font-family:"DM Mono","Courier New",monospace;font-size:10px;letter-spacing:.08em;text-align:center;padding:10px;line-height:1.35;
+  }
+  .post .overlay{
+    position:relative;width:100%;padding:12px;
+    background:linear-gradient(180deg,transparent,rgba(46,15,92,.85));
+    color:#fff;font-size:11px;display:flex;justify-content:space-between;align-items:center;
+    opacity:0;transition:.25s;
+  }
+  .post:hover .overlay{opacity:1}
+  .post .overlay .ic{display:flex;align-items:center;gap:4px}
+  .post.video::after{
+    content:"▶";position:absolute;top:10px;right:10px;color:#fff;font-size:14px;
+    background:rgba(0,0,0,.4);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  }
+  .post.fb-post{display:none}
+  body.feed-fb .post{display:none}
+  body.feed-fb .post.fb-post{display:flex}
+  body.feed-ig .post.fb-post{display:none}
+
+  /* solid post tiles with bold organic shapes */
+  .post::before{content:"";position:absolute;pointer-events:none}
+  .post-grad-1{background:#3a1a6a}
+  .post-grad-1::before{top:14%;right:14%;width:36%;aspect-ratio:1;background:var(--lemon);border-radius:50%}
+  .post-grad-2{background:var(--orange)}
+  .post-grad-2::before{left:-15%;bottom:-20%;width:90%;aspect-ratio:1;background:var(--pink);border-radius:55% 45% 60% 40%/45% 55% 45% 55%}
+  .post-grad-3{background:var(--mint)}
+  .post-grad-3::before{right:-20%;top:-15%;width:75%;aspect-ratio:1;background:var(--grape);border-radius:60% 40% 55% 45%/50% 55% 45% 50%}
+  .post-grad-4{background:var(--pink)}
+  .post-grad-4::before{left:50%;top:50%;transform:translate(-50%,-50%);width:60%;aspect-ratio:1;background:var(--lemon);border-radius:48% 52% 65% 35%/55% 45% 55% 45%}
+  .post-grad-5{background:var(--grape)}
+  .post-grad-5::before{left:-10%;bottom:-15%;width:80%;aspect-ratio:1;background:var(--orange);border-radius:55% 45% 40% 60%/45% 60% 40% 55%}
+  .post-grad-6{background:var(--grape-deep)}
+  .post-grad-6::before{right:-10%;top:50%;transform:translateY(-50%);width:80%;aspect-ratio:1;background:var(--mint);border-radius:60% 40% 55% 45%/45% 55% 45% 55%}
+  .post-grad-7{background:var(--lemon)}
+  .post-grad-7::before{left:50%;top:-25%;transform:translateX(-50%);width:90%;aspect-ratio:1;background:var(--pink);border-radius:50%}
+  .post-grad-8{background:#FFD4DD}
+  .post-grad-8::before{right:-20%;bottom:-25%;width:90%;aspect-ratio:1;background:var(--orange);border-radius:55% 45% 60% 40%/40% 60% 40% 60%}
+  .post .ph,.post .overlay{position:relative;z-index:2}
+
+  /* ---------- BOOK / CONTACT ---------- */
+  .book{
+    background:var(--lavender);
+  }
+  .book-card{
+    background:var(--grape);color:var(--cream);
+    border-radius:32px;padding:64px 56px;
+    position:relative;overflow:hidden;
+    box-shadow:0 24px 60px -10px rgba(74,31,140,.4);
+  }
+  @media (max-width:680px){.book-card{padding:40px 28px}}
+  .book-card::before{
+    content:"";position:absolute;top:-80px;right:-80px;width:280px;height:280px;
+    background:var(--lemon);border-radius:55% 45% 60% 40%/45% 55% 45% 55%;opacity:.18;
+  }
+  .book-card::after{
+    content:"";position:absolute;bottom:-100px;left:-60px;width:240px;height:240px;
+    background:var(--mint);border-radius:50%;opacity:.18;
+  }
+  .book-card .inner{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+  @media (max-width:880px){.book-card .inner{grid-template-columns:1fr;gap:32px}}
+  .book-card h2{color:var(--lemon);font-size:clamp(40px,5vw,68px);margin-bottom:18px}
+  .book-card h2 .pink{color:var(--pink)}
+  .book-card p{color:#F8E8FF;font-size:18px;max-width:480px;margin-bottom:26px;line-height:1.55}
+  .book-form{
+    background:rgba(255,255,255,.05);border:1.5px solid rgba(245,207,62,.3);
+    border-radius:20px;padding:24px;backdrop-filter:blur(10px);
+  }
+  .book-form label{display:block;font-size:12px;color:var(--lemon);letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px;font-weight:700}
+  .book-form .field{margin-bottom:14px}
+  .book-form input,.book-form select,.book-form textarea{
+    width:100%;background:rgba(255,255,255,.08);border:1.5px solid rgba(245,207,62,.25);
+    color:#fff;padding:12px 14px;border-radius:12px;font:inherit;
+  }
+  .book-form input::placeholder,.book-form textarea::placeholder{color:rgba(248,232,255,.5)}
+  .book-form input:focus,.book-form select:focus,.book-form textarea:focus{outline:none;border-color:var(--lemon);background:rgba(255,255,255,.12)}
+  .book-form textarea{resize:none;min-height:80px}
+  .book-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .book-form button{
+    width:100%;background:var(--lemon);color:var(--grape);
+    padding:14px;border-radius:999px;
+    font-family:"Bagel Fat One",serif;letter-spacing:.04em;font-size:16px;
+    transition:.2s;margin-top:6px;
+  }
+  .book-form button:hover{background:#fff;transform:translateY(-2px)}
+  .book-form .sent{display:none;text-align:center;color:var(--lemon);padding:20px;font-family:"Caprasimo",serif;font-size:20px}
+  .book-form.is-sent .sent{display:block}
+  .book-form.is-sent .field,.book-form.is-sent button,.book-form.is-sent .row2{display:none}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--grape-deep);color:var(--lavender);padding:60px 0 32px;
+    border-top:3px solid var(--lemon);
+  }
+  footer .grid3{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:40px}
+  @media (max-width:680px){footer .grid3{grid-template-columns:1fr}}
+  footer h4{font-family:"Bagel Fat One",serif;color:var(--lemon);font-size:18px;margin-bottom:14px;letter-spacing:.04em}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  footer a{color:var(--lavender-mid);text-decoration:none;font-size:14px}
+  footer a:hover{color:var(--lemon)}
+  footer .brand-foot{display:flex;flex-direction:column;gap:14px;max-width:340px}
+  footer .brand-foot .logo{display:flex;align-items:center;gap:12px}
+  footer .brand-foot .logo img{width:54px;height:54px;border-radius:50%;border:2px solid var(--lemon)}
+  footer .brand-foot p{font-size:14px;color:var(--lavender-mid);line-height:1.5}
+  .socials{display:flex;gap:10px;margin-top:6px}
+  .socials a{
+    width:40px;height:40px;border-radius:50%;border:1.5px solid var(--lemon);
+    display:grid;place-items:center;transition:.2s;color:var(--lemon)
+  }
+  .socials a:hover{background:var(--lemon);color:var(--grape-deep)}
+  footer .legal{
+    border-top:1.5px solid rgba(245,207,62,.2);padding-top:22px;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-size:13px;color:var(--lavender-mid);
+  }
+  footer .legal .marquee-name{font-family:"Bagel Fat One",serif;color:var(--lemon);font-size:18px}
+
+  /* utility */
+  .float{animation:float 6s ease-in-out infinite}
+  .float-2{animation:float 7s ease-in-out infinite -2s}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-12px) rotate(calc(var(--r,0deg) + 1deg))}}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal-d2{transition-delay:.12s}
+  .reveal-d3{transition-delay:.24s}
+  .reveal-d4{transition-delay:.36s}
+
+  /* big section divider wave */
+  .wave-divider{display:block;width:100%;height:60px;margin:-1px 0}
+</style>
+</head>
+<body class="feed-ig">
+
+<!-- =============================== NAV =============================== -->
+<nav class="top">
+  <div class="wrap row">
+    <a href="#" class="brand">
+      <img src="assets/logo-pink.jpg" alt="Seekie Studios logo">
+      <div>
+        <div class="bn">Seekie Studios</div>
+        <div class="bs">Paint · Sip · Geelong</div>
+      </div>
+    </a>
+    <ul>
+      <li><a href="#what">What we do</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#astray">Astray Bar</a></li>
+      <li><a href="#feed">The Feed</a></li>
+      <li><a href="#book">Book</a></li>
+    </ul>
+    <a class="nav-cta" href="#book">Book a Party →</a>
+  </div>
+</nav>
+
+<!-- =============================== HERO =============================== -->
+<header class="hero">
+  <!-- Bold organic blob shapes (replacing background gradients) -->
+  <div class="hero-blob b1" aria-hidden="true"></div>
+  <div class="hero-blob b2" aria-hidden="true"></div>
+  <div class="hero-blob b3" aria-hidden="true"></div>
+
+  <!-- Groovy rainbow ribbon — enters/exits cleanly off-screen -->
+  <svg class="hero-squiggle" viewBox="0 0 1600 200" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path d="M-100 130 C 200 40, 400 220, 700 110 S 1100 0, 1400 130 S 1700 220, 1800 110" stroke="#EC3B8E" stroke-width="24" stroke-linecap="round"/>
+    <path d="M-100 105 C 200 15, 400 195, 700 85 S 1100 -25, 1400 105 S 1700 195, 1800 85" stroke="#F37A2B" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-100 85 C 200 -5, 400 175, 700 65 S 1100 -45, 1400 85 S 1700 175, 1800 65" stroke="#F5CF3E" stroke-width="10" stroke-linecap="round"/>
+    <path d="M-100 70 C 200 -20, 400 160, 700 50 S 1100 -60, 1400 70 S 1700 160, 1800 50" stroke="#6CD7C2" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <svg class="hero-squiggle-2" viewBox="0 0 1600 220" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path d="M-100 140 C 250 40, 500 240, 800 120 S 1200 10, 1500 140 S 1750 240, 1800 120" stroke="#7B36C7" stroke-width="24" stroke-linecap="round"/>
+    <path d="M-100 165 C 250 65, 500 265, 800 145 S 1200 35, 1500 165 S 1750 265, 1800 145" stroke="#EC3B8E" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-100 185 C 250 85, 500 285, 800 165 S 1200 55, 1500 185 S 1750 285, 1800 165" stroke="#F37A2B" stroke-width="10" stroke-linecap="round"/>
+    <path d="M-100 200 C 250 100, 500 300, 800 180 S 1200 70, 1500 200 S 1750 300, 1800 180" stroke="#F5CF3E" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="reveal in"><span class="eyebrow"><span class="dot"></span>Geelong · Surf Coast · Bellarine</span></div>
+        <h1 class="hero-title reveal in reveal-d2">
+          Paint, <span class="amp">&amp;</span><br>
+          <span class="gw">sip</span>, <em>repeat.</em>
+        </h1>
+        <p class="lede reveal in reveal-d3">
+          Private mobile paint &amp; sip parties — we roll up to your house, your venue, your bar.
+          Fully BYO, custom paintings to suit your theme, all the canvases, easels &amp; aprons sorted.
+          You bring the crew &amp; the playlist. 🎨
+        </p>
+        <div class="ctas reveal in reveal-d4">
+          <a class="btn btn-primary" href="#book">Book a private party <span class="arr">→</span></a>
+          <a class="btn btn-secondary" href="#events">See upcoming events</a>
+        </div>
+        <div class="hero-stats reveal in reveal-d4">
+          <div class="s"><div class="num">2–3h</div><div class="lab">Session length</div></div>
+          <div class="s"><div class="num">BYO</div><div class="lab">Drinks &amp; venue</div></div>
+          <div class="s"><div class="num">∞</div><div class="lab">Custom themes</div></div>
+        </div>
+      </div>
+
+      <div class="stage" aria-hidden="true">
+        <div class="polaroid p1 float"><div class="img">[ photo ]<br>painters at easels<br>laughing, mid-mess</div><div class="cap">happy mess ✿</div></div>
+        <div class="polaroid p2 float-2"><div class="img"></div><div class="cap">starry cat night</div></div>
+        <div class="polaroid p3 float"><div class="img">[ photo ]<br>palette w/ paint blobs<br>+ wine glass</div><div class="cap">grand opening!</div></div>
+        <div class="polaroid p4 float-2"><div class="img">[ photo ]<br>finished canvases<br>lined up on table</div><div class="cap">bellarine birthday</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =============================== TICKER =============================== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>
+      <em>BYO drinks</em><span class="star">✺</span>
+      <em>We come to you</em><span class="star">✺</span>
+      <em>Custom themes</em><span class="star">✺</span>
+      <em>Hens · birthdays · book club · just because</em><span class="star">✺</span>
+      <em>Mocktails welcome</em><span class="star">✺</span>
+      <em>No skills required</em><span class="star">✺</span>
+    </span>
+    <span aria-hidden="true">
+      <em>BYO drinks</em><span class="star">✺</span>
+      <em>We come to you</em><span class="star">✺</span>
+      <em>Custom themes</em><span class="star">✺</span>
+      <em>Hens · birthdays · book club · just because</em><span class="star">✺</span>
+      <em>Mocktails welcome</em><span class="star">✺</span>
+      <em>No skills required</em><span class="star">✺</span>
+    </span>
+  </div>
+</div>
+
+<!-- =============================== WHAT WE DO =============================== -->
+<section class="what" id="what">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">how it works</span>
+        <h2 class="reveal">A paint party,<br>delivered to your door.</h2>
+      </div>
+      <p class="reveal reveal-d2">
+        We're a small mobile studio based on the Bellarine. We pack up everything you need
+        and turn your living room, backyard or function space into the studio for the night.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div class="num">01</div>
+        <div class="icon-circle">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFF6E8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-5 4-9 9-9s9 4 9 9c0 3-2 4-4 4s-2 2-2 3 1 2-1 3c-3 1-11-2-11-10z"/><circle cx="7" cy="9" r="1.4" fill="#FFF6E8"/><circle cx="11" cy="6" r="1.4" fill="#FFF6E8"/><circle cx="15" cy="7" r="1.4" fill="#FFF6E8"/><circle cx="17" cy="11" r="1.4" fill="#FFF6E8"/></svg>
+        </div>
+        <h3>Pick a painting</h3>
+        <p>Choose from our catalogue of crowd-favourites, or tell us your theme and we'll design something custom — Taylor Swift era? French Riviera? Black cat under the moon? Done.</p>
+      </div>
+      <div class="feature reveal reveal-d2">
+        <div class="num">02</div>
+        <div class="icon-circle">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFF6E8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21h14"/><path d="M9 21V8a3 3 0 0 1 6 0v13"/><path d="M9 12h6"/></svg>
+        </div>
+        <h3>We bring it all</h3>
+        <p>Canvases, easels, paints, brushes, aprons, tablecloths — the whole studio packs into the van and unpacks at your place. You do not have to lift a paintbrush ahead of time.</p>
+      </div>
+      <div class="feature reveal reveal-d3">
+        <div class="num">03</div>
+        <div class="icon-circle">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFF6E8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4l-2 2v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9l-2-2V3"/><path d="M8 3h8"/><path d="M10 12h4"/></svg>
+        </div>
+        <h3>BYO &amp; sip</h3>
+        <p>Bring whatever you're drinking — bubbles, longnecks, lemon-lime &amp; bitters, all welcome. We guide you through, stroke by stroke, for 2–3 messy, brilliant hours.</p>
+      </div>
+    </div>
+
+    <div class="what-rows">
+      <ul>
+        <li><span class="check">✓</span><div><b>Operating across</b> Geelong, Surf Coast &amp; the Bellarine. Other locations by request.</div></li>
+        <li><span class="check">✓</span><div><b>Mobile setup</b> — we come to you, or your venue (with their permission)</div></li>
+        <li><span class="check">✓</span><div><b>Small groups welcome</b> — book the whole room or just a few mates</div></li>
+        <li><span class="check">✓</span><div><b>Custom catalogue</b> — pick from our designs or commission a one-off</div></li>
+        <li><span class="check">✓</span><div><b>Tables &amp; chairs</b> available at extra cost by prior arrangement</div></li>
+      </ul>
+      <div class="what-img">
+        <div class="sticker">small<br>groups<br>welcome!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== EVENTS =============================== -->
+<section class="events" id="events">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">upcoming events</span>
+        <h2 class="reveal">Grab a seat,<br>grab a glass.</h2>
+      </div>
+      <p class="reveal reveal-d2">
+        Public events run at partner venues across the region. Tickets via Humanitix or our Facebook event page —
+        seats are limited &amp; usually go fast.
+      </p>
+    </div>
+
+    <div class="event-grid">
+      <article class="event event-1 reveal">
+        <div class="cover">
+          <div class="blob-shape" aria-hidden="true"></div>
+          <span class="pricetag">$100pp</span>
+          <div class="ph" style="position:relative;z-index:2">[ event hero ]<br>Starry-night<br>black cat painting</div>
+        </div>
+        <div class="body">
+          <div class="when"><span class="dot"></span>Sun 24 May · 4:30pm</div>
+          <h3>Cat Under the Moon @ Astray Bar</h3>
+          <div class="meta">
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7B36C7" stroke-width="2" stroke-linecap="round"><path d="M12 22s7-7 7-12a7 7 0 1 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Astray Bar · Geelong CBD</span>
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7B36C7" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>2.5 hours · bottomless drinks pkg</span>
+          </div>
+          <div class="foot">
+            <div class="seats"><b>6 seats</b> left of 22</div>
+            <a href="#book" target="_blank" rel="noopener">Humanitix →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="event event-2 reveal reveal-d2">
+        <div class="cover">
+          <div class="blob-shape" aria-hidden="true"></div>
+          <div class="blob-shape b2" aria-hidden="true"></div>
+          <span class="pricetag">$85pp</span>
+          <div class="ph" style="position:relative;z-index:2">[ event hero ]<br>Coastal sunset<br>over Bells Beach</div>
+        </div>
+        <div class="body">
+          <div class="when"><span class="dot"></span>Fri 6 June · 6:00pm</div>
+          <h3>Bells Beach Sunset · Torquay</h3>
+          <div class="meta">
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7B36C7" stroke-width="2" stroke-linecap="round"><path d="M12 22s7-7 7-12a7 7 0 1 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>The Salty Dog · Torquay</span>
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7B36C7" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>2 hours · BYO drinks</span>
+          </div>
+          <div class="foot">
+            <div class="seats"><b>14 seats</b> left of 18</div>
+            <a href="#book" target="_blank" rel="noopener">Humanitix →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="event event-3 reveal reveal-d3">
+        <div class="cover">
+          <div class="blob-shape" aria-hidden="true"></div>
+          <div class="blob-shape b2" aria-hidden="true"></div>
+          <span class="pricetag">$90pp</span>
+          <div class="ph" style="position:relative;z-index:2">[ event hero ]<br>Mid-century<br>floral abstract</div>
+        </div>
+        <div class="body">
+          <div class="when"><span class="dot"></span>Sat 21 June · 2:00pm</div>
+          <h3>Bellarine Bloom · Pop-up Studio</h3>
+          <div class="meta">
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7B36C7" stroke-width="2" stroke-linecap="round"><path d="M12 22s7-7 7-12a7 7 0 1 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Drysdale Hall · Bellarine</span>
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7B36C7" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 hours · BYO drinks &amp; nibbles</span>
+          </div>
+          <div class="foot">
+            <div class="seats"><b>SOLD OUT</b></div>
+            <a href="#book" target="_blank" rel="noopener" style="background:#7B36C7">Waitlist →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="humanitix-note">
+      <span>Tickets powered by</span>
+      <span class="pill">Humanitix</span>
+      <span>· also bookable via our Facebook event pages.</span>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== ASTRAY =============================== -->
+<section class="astray" id="astray">
+  <!-- decorative blobs -->
+  <svg style="position:absolute;top:60px;right:-100px;width:300px;opacity:.5" viewBox="0 0 400 200" aria-hidden="true">
+    <path d="M-20 100 C 40 20, 100 180, 160 100 S 280 20, 340 100 S 460 180, 520 100" stroke="#F5CF3E" stroke-width="14" stroke-linecap="round" fill="none"/>
+    <path d="M-20 100 C 40 20, 100 180, 160 100 S 280 20, 340 100 S 460 180, 520 100" stroke="#EC3B8E" stroke-width="8" stroke-linecap="round" fill="none" transform="translate(0,-20)"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="grid2">
+      <div>
+        <span class="section-tag">in partnership with</span>
+        <h2 class="reveal">Sip with us at<br>Astray Bar.</h2>
+        <p class="lede2 reveal reveal-d2">
+          Our favourite place to host public events. Astray pours up bottomless drinks packages
+          (their <b>mocktails</b> are absurd) and the <b>poutine</b> — chips, cheese curds, gravy —
+          is genuinely the best post-painting dinner in Geelong.
+        </p>
+
+        <div class="perks">
+          <div class="perk reveal"><h4>🥂 Bottomless</h4><p>Drinks package included with paint &amp; sip ticket — wines, beers &amp; mocktails.</p></div>
+          <div class="perk reveal reveal-d2"><h4>🍟 Poutine</h4><p>Chips, cheese curds, gravy. Stay for dinner after — it slaps.</p></div>
+          <div class="perk reveal reveal-d3"><h4>🎨 The studio</h4><p>Easels lined up along the bar wall. Lighting? Vibes? Sorted.</p></div>
+          <div class="perk reveal reveal-d4"><h4>📍 Geelong CBD</h4><p>Walking distance from the waterfront. Easy parking nearby.</p></div>
+        </div>
+
+        <a class="btn btn-primary" href="#events">See Astray events <span class="arr">→</span></a>
+      </div>
+
+      <div class="astray-card reveal reveal-d2">
+        <span class="label">Next session ✺</span>
+        <h3>Cat Under <span>the Moon.</span></h3>
+        <ul class="menu-list">
+          <li>Sun 24 May · 4:30pm</li>
+          <li>Astray Bar · Geelong CBD</li>
+          <li>$100pp · drinks + canvas + 2.5h</li>
+        </ul>
+        <div class="meta">
+          <span><b>Run by</b> Seekie Studios</span>
+          <span><b>Hosted at</b> Astray Bar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== FEED =============================== -->
+<section class="gallery" id="feed">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">@seekie.studios</span>
+        <h2 class="reveal">Straight from<br>the studio.</h2>
+      </div>
+      <p class="reveal reveal-d2">
+        A live look at the canvases, the messes, the mid-paint candids. Tag us in your finished pieces —
+        we love seeing where they hang.
+      </p>
+    </div>
+
+    <div class="feed-tabs">
+      <button class="active" data-feed="ig" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+        Instagram
+      </button>
+      <button data-feed="fb" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8a1 1 0 0 1 1-1z"/></svg>
+        Facebook
+      </button>
+      <a href="https://instagram.com/seekie.studios" target="_blank" rel="noopener" style="margin-left:auto;align-self:center;color:var(--plum);font-weight:600;font-size:14px;text-decoration:none">View all on Instagram →</a>
+    </div>
+
+    <div class="feed-grid">
+      <div class="post post-grad-1"><div class="ph">starry cat<br>night canvas<br>finished</div><div class="overlay"><span class="ic">♥ 482</span><span class="ic">💬 38</span></div></div>
+      <div class="post post-grad-2 video"><div class="ph">timelapse<br>of the cat painting<br>2-min reel</div><div class="overlay"><span class="ic">▶ 12.4k</span><span class="ic">♥ 891</span></div></div>
+      <div class="post post-grad-3"><div class="ph">birthday<br>group, easels<br>up at home</div><div class="overlay"><span class="ic">♥ 264</span><span class="ic">💬 21</span></div></div>
+      <div class="post post-grad-4"><div class="ph">paint palette<br>+ wine glass<br>(top down)</div><div class="overlay"><span class="ic">♥ 198</span><span class="ic">💬 12</span></div></div>
+      <div class="post post-grad-5"><div class="ph">bells beach<br>sunset canvas<br>WIP</div><div class="overlay"><span class="ic">♥ 312</span><span class="ic">💬 19</span></div></div>
+      <div class="post post-grad-6 video"><div class="ph">astray bar<br>setup tour<br>reel</div><div class="overlay"><span class="ic">▶ 8.1k</span><span class="ic">♥ 540</span></div></div>
+      <div class="post post-grad-7"><div class="ph">color study<br>swatches<br>flatlay</div><div class="overlay"><span class="ic">♥ 156</span><span class="ic">💬 7</span></div></div>
+      <div class="post post-grad-8"><div class="ph">finished<br>canvases lined<br>up on table</div><div class="overlay"><span class="ic">♥ 421</span><span class="ic">💬 28</span></div></div>
+
+      <!-- Facebook variants -->
+      <div class="post fb-post post-grad-2"><div class="ph">EVENT POST<br>Cat Under the Moon<br>Sun 24 May</div><div class="overlay"><span class="ic">👍 84</span><span class="ic">💬 22</span></div></div>
+      <div class="post fb-post post-grad-1"><div class="ph">FB photo album<br>Bellarine birthday<br>32 photos</div><div class="overlay"><span class="ic">👍 156</span><span class="ic">💬 41</span></div></div>
+      <div class="post fb-post post-grad-3"><div class="ph">Hens party<br>review post<br>5 stars ⭐⭐⭐⭐⭐</div><div class="overlay"><span class="ic">👍 102</span><span class="ic">💬 14</span></div></div>
+      <div class="post fb-post post-grad-5"><div class="ph">Bells Beach<br>Sunset event<br>tickets live</div><div class="overlay"><span class="ic">👍 67</span><span class="ic">💬 9</span></div></div>
+      <div class="post fb-post post-grad-7"><div class="ph">behind the scenes<br>packing the van<br>video</div><div class="overlay"><span class="ic">👍 51</span><span class="ic">💬 6</span></div></div>
+      <div class="post fb-post post-grad-4"><div class="ph">bellarine bloom<br>SOLD OUT<br>announcement</div><div class="overlay"><span class="ic">👍 138</span><span class="ic">💬 27</span></div></div>
+      <div class="post fb-post post-grad-8"><div class="ph">testimonial<br>"best night of<br>the year"</div><div class="overlay"><span class="ic">👍 89</span><span class="ic">💬 11</span></div></div>
+      <div class="post fb-post post-grad-6"><div class="ph">FB live recap<br>Astray Bar<br>opening night</div><div class="overlay"><span class="ic">👍 211</span><span class="ic">💬 33</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== BOOK / CONTACT =============================== -->
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="book-card">
+      <div class="inner">
+        <div>
+          <h2 class="reveal">Got a date<br>in mind? <span class="pink">Let's paint.</span></h2>
+          <p class="reveal reveal-d2">
+            Hens parties, milestone birthdays, book club, team builds, divorce parties, just-because parties.
+            Tell us the vibe and we'll come back with a quote within 24 hours.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:10px;color:#F8E8FF;font-size:15px">
+            <div>📧 <a href="mailto:seekie.studios@gmail.com" style="color:var(--lemon);text-decoration:none;font-weight:600">seekie.studios@gmail.com</a></div>
+            <div>📍 Geelong · Surf Coast · Bellarine (other locations on request)</div>
+            <div>⏱ Sessions run approx. 2–3 hours</div>
+          </div>
+        </div>
+
+        <form class="book-form" id="bookForm" onsubmit="event.preventDefault();this.classList.add('is-sent')">
+          <div class="row2">
+            <div class="field"><label>Your name</label><input type="text" placeholder="Aria" required></div>
+            <div class="field"><label>Group size</label><input type="number" min="2" placeholder="12" required></div>
+          </div>
+          <div class="field"><label>Email</label><input type="email" placeholder="you@email.com" required></div>
+          <div class="row2">
+            <div class="field"><label>Date</label><input type="date" required></div>
+            <div class="field"><label>Region</label>
+              <select required>
+                <option>Geelong</option>
+                <option>Surf Coast</option>
+                <option>Bellarine</option>
+                <option>Other (let us know)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Theme / vibe</label><textarea placeholder="Hens party — coastal florals + bottomless mimosas"></textarea></div>
+          <button type="submit">Send enquiry →</button>
+          <div class="sent">Thanks — we'll be in touch within 24h ✿</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== FOOTER =============================== -->
+<footer>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="brand-foot">
+        <div class="logo">
+          <img src="assets/logo-pink.jpg" alt="">
+          <div>
+            <div style="font-family:'Bagel Fat One',serif;color:var(--lemon);font-size:22px">Seekie Studios</div>
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--lavender-mid);margin-top:2px">Mobile Paint &amp; Sip</div>
+          </div>
+        </div>
+        <p>Private &amp; public paint &amp; sip parties across Geelong, the Surf Coast and the Bellarine. We come to you, fully BYO, custom paintings to suit your theme.</p>
+        <div class="socials">
+          <a href="https://instagram.com/seekie.studios" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+          </a>
+          <a href="https://facebook.com/seekiestudios" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8a1 1 0 0 1 1-1z"/></svg>
+          </a>
+          <a href="mailto:seekie.studios@gmail.com" aria-label="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#what">How it works</a></li>
+          <li><a href="#events">Upcoming events</a></li>
+          <li><a href="#astray">Astray Bar</a></li>
+          <li><a href="#feed">The Feed</a></li>
+          <li><a href="#book">Book a party</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="mailto:seekie.studios@gmail.com">seekie.studios@gmail.com</a></li>
+          <li><a href="https://instagram.com/seekie.studios" target="_blank" rel="noopener">DM on Instagram</a></li>
+          <li><a href="https://facebook.com/seekiestudios" target="_blank" rel="noopener">Message on Facebook</a></li>
+          <li>Geelong · Surf Coast · Bellarine</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="legal">
+      <span>© 2026 <span class="marquee-name">Seekie Studios</span> · Made with paint &amp; love on the Bellarine.</span>
+      <span>ABN xx xxx xxx xxx · Mobile paint &amp; sip parties.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Feed tabs
+  document.querySelectorAll('.feed-tabs button[data-feed]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.feed-tabs button[data-feed]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.body.classList.toggle('feed-ig',btn.dataset.feed==='ig');
+      document.body.classList.toggle('feed-fb',btn.dataset.feed==='fb');
+    });
+  });
+</script>
+</body>
+</html>
